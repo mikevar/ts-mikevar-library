@@ -1,4 +1,4 @@
-import { DEFAULT_LIMIT, DEFAULT_PAGE, MAX_LIMIT } from "./constant";
+import { DEFAULT_LIMIT, DEFAULT_PAGE, MAX_LIMIT } from "./constants";
 
 export interface Pagination {
   page: number;

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parsePagination } from "./pagination";
+import { parsePagination } from "../pagination";
 
 describe("parsePagination", () => {
   it("uses defaults when query is empty", () => {

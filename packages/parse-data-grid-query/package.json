@@ -1,5 +1,5 @@
 {
-  "name": "@mikevar/pagination",
+  "name": "@mikevar/parse-data-grid-query",
   "version": "0.0.1",
   "type": "module",
   "main": "dist/index.js",
@@ -8,7 +8,7 @@
     "dist"
   ],
   "scripts": {
-    "test": "vitest",
+    "test": "vitest src/tests",
     "build": "tsup src/index.ts --dts",
     "dev": "tsup src/index.ts --watch --dts"
   }
