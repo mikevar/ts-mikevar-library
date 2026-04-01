@@ -1,3 +1,5 @@
+import { DEFAULT_LIMIT, DEFAULT_PAGE, MAX_LIMIT } from "./constant";
+
 export interface Pagination {
   page: number;
   limit: number;
@@ -38,9 +40,9 @@ export function parsePagination({
   query: unknown;
   options?: ParsePaginationOptions;
 }): Pagination {
-  const defaultPage = options.defaultPage ?? 1;
-  const defaultLimit = options.defaultLimit ?? 10;
-  const maxLimit = options.maxLimit ?? 100;
+  const defaultPage = options.defaultPage ?? DEFAULT_PAGE;
+  const defaultLimit = options.defaultLimit ?? DEFAULT_LIMIT;
+  const maxLimit = options.maxLimit ?? MAX_LIMIT;
 
   if (typeof query !== "object" || query === null) {
     const page = defaultPage;
