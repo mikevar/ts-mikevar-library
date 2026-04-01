@@ -17,5 +17,8 @@
     "tsup": "^8.5.1",
     "typescript": "^6.0.2",
     "vitest": "^4.1.2"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.2"
   }
 }
