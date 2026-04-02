@@ -57,3 +57,15 @@ export interface Filtering {
   search: string | undefined;
   filters: Filters;
 }
+
+/**
+ * Base request query object for data grid queries
+ */
+export type BaseRequestQueryObject<TOrderByKey extends string> = {
+  page: number;
+  limit: number;
+  order: SortingOrder;
+  orderBy: TOrderByKey;
+  filterMode: FilterMode;
+  search?: string;
+};

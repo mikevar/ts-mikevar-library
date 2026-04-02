@@ -1,5 +1,5 @@
 import { ORDER_BY_QUERY_KEY, ORDER_QUERY_KEY } from "./constants.ts";
-import { type Sorting, type SortingOrder } from "./types.ts";
+import type { BaseRequestQueryObject, Sorting, SortingOrder } from "./types.ts";
 
 /**
  * Parses the sorting order from query parameters
@@ -56,12 +56,15 @@ export function parseSortingOrderBy<TOrderByKey extends string>({
  * @param defaultOrderBy - Default order by key to use if none is provided
  * @returns Sorting configuration with order and orderBy
  */
-export function parseSorting<TOrderByKey extends string>({
+export function parseSorting<
+  TQuery extends BaseRequestQueryObject<TOrderByKey>,
+  TOrderByKey extends string,
+>({
   query,
   allowed,
   defaultOrderBy,
 }: {
-  query: unknown;
+  query: TQuery;
   allowed: readonly TOrderByKey[];
   defaultOrderBy?: TOrderByKey;
 }): Sorting<TOrderByKey> {

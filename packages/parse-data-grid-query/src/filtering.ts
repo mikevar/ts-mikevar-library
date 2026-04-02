@@ -3,14 +3,22 @@ import {
   SEARCH_QUERY_KEY,
   RESERVED_QUERY_KEYS,
 } from "./constants.ts";
-import { type FilterMode, type Filtering, type Filters } from "./types.ts";
+import type {
+  BaseRequestQueryObject,
+  FilterMode,
+  Filtering,
+  Filters,
+} from "./types.ts";
 
 /**
  * Parses filtering configuration from query parameters
  * @param query - The query object to parse
  * @returns Filtering configuration with search or filter mode
  */
-export function parseFiltering({ query }: { query: unknown }): Filtering {
+export function parseFiltering<
+  T extends BaseRequestQueryObject<TOrderByKey>,
+  TOrderByKey extends string,
+>({ query }: { query: T }): Filtering {
   const q = query as Record<string, unknown>;
 
   const filterMode = q[FILTER_MODE_QUERY_KEY] as FilterMode | undefined;

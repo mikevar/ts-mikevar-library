@@ -5,7 +5,11 @@ import {
   LIMIT_QUERY_KEY,
   PAGE_QUERY_KEY,
 } from "./constants.ts";
-import { type Pagination, type ParsePaginationOptions } from "./types.ts";
+import type {
+  BaseRequestQueryObject,
+  Pagination,
+  ParsePaginationOptions,
+} from "./types.ts";
 
 /**
  * Converts a value to a number, returning null if conversion fails
@@ -45,11 +49,14 @@ export function calculateOffset({
  * @param options - Optional configuration for pagination defaults and limits
  * @returns Pagination configuration with page, limit, and offset
  */
-export function parsePagination({
+export function parsePagination<
+  T extends BaseRequestQueryObject<TOrderByKey>,
+  TOrderByKey extends string,
+>({
   query,
   options = {},
 }: {
-  query: unknown;
+  query: T;
   options?: ParsePaginationOptions;
 }): Pagination {
   const defaultPage = options.defaultPage ?? DEFAULT_PAGE;
