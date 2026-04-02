@@ -1,17 +1,17 @@
-import { DEFAULT_LIMIT, DEFAULT_PAGE, MAX_LIMIT } from "./constants";
+import {
+  DEFAULT_LIMIT,
+  DEFAULT_PAGE,
+  MAX_LIMIT,
+  LIMIT_QUERY_KEY,
+  PAGE_QUERY_KEY,
+} from "./constants";
+import { type Pagination, type ParsePaginationOptions } from "./types";
 
-export interface Pagination {
-  page: number;
-  limit: number;
-  offset: number;
-}
-
-export interface ParsePaginationOptions {
-  defaultPage?: number;
-  defaultLimit?: number;
-  maxLimit?: number;
-}
-
+/**
+ * Converts a value to a number, returning null if conversion fails
+ * @param value - The value to convert
+ * @returns The converted number or null if conversion fails
+ */
 function toNumber(value: unknown): number | null {
   const n =
     typeof value === "number"
@@ -23,6 +23,12 @@ function toNumber(value: unknown): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+/**
+ * Calculates the offset for pagination based on page and limit
+ * @param page - The page number (1-indexed)
+ * @param limit - The number of items per page
+ * @returns The calculated offset
+ */
 export function calculateOffset({
   page,
   limit,
@@ -33,6 +39,12 @@ export function calculateOffset({
   return (page - 1) * limit;
 }
 
+/**
+ * Parses pagination configuration from query parameters
+ * @param query - The query object to parse
+ * @param options - Optional configuration for pagination defaults and limits
+ * @returns Pagination configuration with page, limit, and offset
+ */
 export function parsePagination({
   query,
   options = {},
@@ -55,10 +67,13 @@ export function parsePagination({
     };
   }
 
-  const q = query as Record<string, unknown>;
+  const q = query as {
+    [PAGE_QUERY_KEY]?: unknown;
+    [LIMIT_QUERY_KEY]?: unknown;
+  };
 
-  const rawPage = toNumber(q.page);
-  const rawLimit = toNumber(q.limit);
+  const rawPage = toNumber(q[PAGE_QUERY_KEY]);
+  const rawLimit = toNumber(q[LIMIT_QUERY_KEY]);
 
   const page = Math.max(rawPage ?? defaultPage, 1);
   const limit = Math.min(Math.max(rawLimit ?? defaultLimit, 1), maxLimit);
