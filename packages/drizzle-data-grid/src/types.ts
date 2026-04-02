@@ -45,7 +45,8 @@ export type FilterOperator =
   | "lt"
   | "lte"
   | "between"
-  | "isNull";
+  | "isNull"
+  | "inArray";
 
 export interface DataGridQueryBuilderArgs<
   TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,

@@ -1,6 +1,9 @@
-import type { FilterValue } from "@mikevar/parse-data-grid-query";
+import type {
+  FilterValue,
+  BaseRequestQueryObject,
+} from "@mikevar/parse-data-grid-query";
 import { createDataGridQuery, DataGridQuery } from "./data-grid-query.ts";
-import { DataGridFields } from "./data-grid-fields.ts";
+import { createDataGridFields, DataGridFields } from "./data-grid-fields.ts";
 import type {
   FieldColumn,
   Fields,
@@ -21,25 +24,33 @@ import {
   lte,
   isNull,
   isNotNull,
+  inArray,
   type SQL,
   type AnyColumn,
   between,
 } from "drizzle-orm";
 
-export function createDataGrid<TOrderByKey extends string, TItem = any>({
+export function createDataGrid<
+  TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
+  TOrderByKey extends string,
+  TItem = any,
+>({
   query,
   fields,
   queryBuilders,
 }: {
   query: {
-    query: unknown;
+    query: TRequestQuery;
     allowed: readonly TOrderByKey[];
   };
   fields: Fields<TOrderByKey>;
-  queryBuilders: DataGridQueryBuilders<TOrderByKey, TItem>;
+  queryBuilders: DataGridQueryBuilders<TRequestQuery, TOrderByKey, TItem>;
 }) {
-  const dataGridQuery = createDataGridQuery(query);
-  const dataGridFields = new DataGridFields({ fields });
+  const dataGridQuery = createDataGridQuery<TRequestQuery, TOrderByKey>({
+    query: query.query,
+    sortables: query.allowed,
+  });
+  const dataGridFields = createDataGridFields<TOrderByKey>({ fields });
   return new DataGrid({
     query: dataGridQuery,
     fields: dataGridFields,
@@ -47,7 +58,11 @@ export function createDataGrid<TOrderByKey extends string, TItem = any>({
   });
 }
 
-export class DataGrid<TOrderByKey extends string, TItem = any> {
+export class DataGrid<
+  TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
+  TOrderByKey extends string,
+  TItem = any,
+> {
   private readonly filterOperators: Record<
     FilterOperator,
     (col: FieldColumn, values: FilterValueType[]) => SQL
@@ -65,11 +80,17 @@ export class DataGrid<TOrderByKey extends string, TItem = any> {
       between(col, val1 as string, val2 as string),
 
     isNull: (col, [val]) => (val === true ? isNull(col) : isNotNull(col)),
+
+    inArray: (col, values) => inArray(col, values),
   };
 
-  private query: DataGridQuery<TOrderByKey>;
+  private query: DataGridQuery<TRequestQuery, TOrderByKey>;
   private fields: DataGridFields<TOrderByKey>;
-  private queryBuilders: DataGridQueryBuilders<TOrderByKey>;
+  private queryBuilders: DataGridQueryBuilders<
+    TRequestQuery,
+    TOrderByKey,
+    TItem
+  >;
 
   private filters: SQL | undefined = undefined;
 
@@ -81,9 +102,9 @@ export class DataGrid<TOrderByKey extends string, TItem = any> {
     fields,
     queryBuilders,
   }: {
-    query: DataGridQuery<TOrderByKey>;
+    query: DataGridQuery<TRequestQuery, TOrderByKey>;
     fields: DataGridFields<TOrderByKey>;
-    queryBuilders: DataGridQueryBuilders<TOrderByKey>;
+    queryBuilders: DataGridQueryBuilders<TRequestQuery, TOrderByKey, TItem>;
   }) {
     this.query = query;
     this.fields = fields;
@@ -130,7 +151,7 @@ export class DataGrid<TOrderByKey extends string, TItem = any> {
   }
 
   private buildFilters() {
-    const filtering = this.query.getFiltering();
+    const filtering = { ...this.query.getFiltering() };
     if (!filtering) {
       throw new Error("Filtering is required");
     }
@@ -145,7 +166,7 @@ export class DataGrid<TOrderByKey extends string, TItem = any> {
   }
 
   private buildSearchModeFilters() {
-    const filtering = this.query.getFiltering();
+    const filtering = { ...this.query.getFiltering() };
     if (!filtering) {
       throw new Error("Filters are required");
     }
@@ -173,7 +194,7 @@ export class DataGrid<TOrderByKey extends string, TItem = any> {
   }
 
   private buildFilterModeFilters() {
-    const filtering = this.query.getFiltering();
+    const filtering = { ...this.query.getFiltering() };
     if (!filtering) {
       throw new Error("Filters are required");
     }
@@ -185,12 +206,12 @@ export class DataGrid<TOrderByKey extends string, TItem = any> {
     const filterableFields = this.fields.getFilterableFields();
 
     for (const key of Object.keys(filtering.filters)) {
-      const field = filterableFields[key as keyof typeof filterableFields];
+      const { fieldKey, operator } = this.parseFieldKeyAndOperator({ key });
+
+      const field = filterableFields[fieldKey as keyof typeof filterableFields];
       if (!field) {
         continue;
       }
-
-      const { fieldKey, operator } = this.parseFieldKeyAndOperator({ key });
       const parsedValues = this.parseValue({
         type: field.type,
         values: filtering.filters[key as keyof typeof filtering.filters],
@@ -256,6 +277,14 @@ export class DataGrid<TOrderByKey extends string, TItem = any> {
   async execute() {
     await this.resolveDataGridQuery();
     return this.getResolvedDataGridQuery();
+  }
+
+  getQuery() {
+    return this.query;
+  }
+
+  getFilters() {
+    return this.filters;
   }
 
   getItems() {

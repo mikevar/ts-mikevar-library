@@ -34,28 +34,28 @@ export class DataGridQuery<
   }) {
     this.query = query;
 
-    this.pagination = this.parsePagination();
-    this.sorting = this.parseSorting({ allowed: sortables });
-    this.filtering = this.parseFiltering();
+    this.buildPagination();
+    this.buildSorting({ allowed: sortables });
+    this.buildFiltering();
   }
 
-  private parsePagination(): Pagination | undefined {
-    return parsePagination<TRequestQuery, TOrderByKey>({ query: this.query });
+  private buildPagination(): void {
+    this.pagination = parsePagination<TRequestQuery, TOrderByKey>({
+      query: this.query,
+    });
   }
 
-  private parseSorting({
-    allowed,
-  }: {
-    allowed: readonly TOrderByKey[];
-  }): Sorting<TOrderByKey> | undefined {
-    return parseSorting<TRequestQuery, TOrderByKey>({
+  private buildSorting({ allowed }: { allowed: readonly TOrderByKey[] }): void {
+    this.sorting = parseSorting<TRequestQuery, TOrderByKey>({
       query: this.query,
       allowed,
     });
   }
 
-  private parseFiltering(): Filtering {
-    return parseFiltering<TRequestQuery, TOrderByKey>({ query: this.query });
+  private buildFiltering(): void {
+    this.filtering = parseFiltering<TRequestQuery, TOrderByKey>({
+      query: this.query,
+    });
   }
 
   getPagination(): Pagination {

@@ -23,12 +23,12 @@ export class DataGridFields<TKey extends string> {
   constructor({ fields }: { fields: Fields<TKey> }) {
     this.fields = fields;
 
-    this.parseSortableFields();
-    this.parseSearchableFields();
-    this.parseFilterableFields();
+    this.buildSortableFields();
+    this.buildSearchableFields();
+    this.buildFilterableFields();
   }
 
-  private parseSortableFields() {
+  private buildSortableFields() {
     if (this.sortableFields) {
       return;
     }
@@ -42,7 +42,7 @@ export class DataGridFields<TKey extends string> {
     }
   }
 
-  private parseSearchableFields() {
+  private buildSearchableFields() {
     if (this.searchableFields) {
       return;
     }
@@ -59,7 +59,7 @@ export class DataGridFields<TKey extends string> {
     }
   }
 
-  private parseFilterableFields() {
+  private buildFilterableFields() {
     if (this.filterableFields) {
       return;
     }
@@ -82,7 +82,7 @@ export class DataGridFields<TKey extends string> {
 
   getSortableFields(): SortableFields<TKey> {
     if (!this.sortableFields) {
-      this.parseSortableFields();
+      this.buildSortableFields();
     }
 
     return this.sortableFields!;
@@ -90,7 +90,7 @@ export class DataGridFields<TKey extends string> {
 
   getSearchableFields(): SearchableFields<TKey> {
     if (!this.searchableFields) {
-      this.parseSearchableFields();
+      this.buildSearchableFields();
     }
 
     return this.searchableFields!;
@@ -98,7 +98,7 @@ export class DataGridFields<TKey extends string> {
 
   getFilterableFields(): FilterableFields<TKey> {
     if (!this.filterableFields) {
-      this.parseFilterableFields();
+      this.buildFilterableFields();
     }
 
     return this.filterableFields!;
