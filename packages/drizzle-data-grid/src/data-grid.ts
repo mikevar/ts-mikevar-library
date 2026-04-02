@@ -26,7 +26,7 @@ import {
   between,
 } from "drizzle-orm";
 
-export function createDataGrid<TOrderByKey extends string>({
+export function createDataGrid<TOrderByKey extends string, TItem = any>({
   query,
   fields,
   queryBuilders,
@@ -36,7 +36,7 @@ export function createDataGrid<TOrderByKey extends string>({
     allowed: readonly TOrderByKey[];
   };
   fields: Fields<TOrderByKey>;
-  queryBuilders: DataGridQueryBuilders<TOrderByKey>;
+  queryBuilders: DataGridQueryBuilders<TOrderByKey, TItem>;
 }) {
   const dataGridQuery = createDataGridQuery(query);
   const dataGridFields = new DataGridFields({ fields });
