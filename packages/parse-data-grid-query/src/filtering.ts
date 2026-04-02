@@ -2,8 +2,8 @@ import {
   FILTER_MODE_QUERY_KEY,
   SEARCH_QUERY_KEY,
   RESERVED_QUERY_KEYS,
-} from "./constants";
-import { type FilterMode } from "./types";
+} from "./constants.ts";
+import { type FilterMode } from "./types.ts";
 
 /**
  * Parses filtering configuration from query parameters

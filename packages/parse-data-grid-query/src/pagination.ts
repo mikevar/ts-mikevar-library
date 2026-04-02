@@ -4,8 +4,8 @@ import {
   MAX_LIMIT,
   LIMIT_QUERY_KEY,
   PAGE_QUERY_KEY,
-} from "./constants";
-import { type Pagination, type ParsePaginationOptions } from "./types";
+} from "./constants.ts";
+import { type Pagination, type ParsePaginationOptions } from "./types.ts";
 
 /**
  * Converts a value to a number, returning null if conversion fails

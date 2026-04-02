@@ -1,5 +1,5 @@
-import { ORDER_BY_QUERY_KEY, ORDER_QUERY_KEY } from "./constants";
-import { type Sorting, type SortingOrder } from "./types";
+import { ORDER_BY_QUERY_KEY, ORDER_QUERY_KEY } from "./constants.ts";
+import { type Sorting, type SortingOrder } from "./types.ts";
 
 /**
  * Parses the sorting order from query parameters
