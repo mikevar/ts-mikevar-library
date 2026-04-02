@@ -33,3 +33,11 @@ export interface ParsePaginationOptions {
   defaultLimit?: number;
   maxLimit?: number;
 }
+
+/**
+ * Filtering configuration for data grid queries
+ */
+export interface Filtering {
+  filterMode: FilterMode | undefined;
+  filters: Record<string, unknown>;
+}
