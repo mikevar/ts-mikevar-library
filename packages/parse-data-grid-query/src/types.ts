@@ -35,9 +35,25 @@ export interface ParsePaginationOptions {
 }
 
 /**
+ * Filter key for data grid queries
+ */
+export type FilterKey = string;
+
+/**
+ * Filter value for data grid queries
+ */
+export type FilterValue = string[] | undefined;
+
+/**
+ * Filters configuration for data grid queries
+ */
+export type Filters = Record<FilterKey, FilterValue>;
+
+/**
  * Filtering configuration for data grid queries
  */
 export interface Filtering {
   filterMode: FilterMode | undefined;
-  filters: Record<string, unknown>;
+  search: string | undefined;
+  filters: Filters;
 }

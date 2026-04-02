@@ -3,7 +3,7 @@ import {
   SEARCH_QUERY_KEY,
   RESERVED_QUERY_KEYS,
 } from "./constants.ts";
-import { type FilterMode, type Filtering } from "./types.ts";
+import { type FilterMode, type Filtering, type Filters } from "./types.ts";
 
 /**
  * Parses filtering configuration from query parameters
@@ -14,15 +14,19 @@ export function parseFiltering({ query }: { query: unknown }): Filtering {
   const q = query as Record<string, unknown>;
 
   const filterMode = q[FILTER_MODE_QUERY_KEY] as FilterMode | undefined;
-  let filters: Record<string, unknown> = {};
+  let search: string | undefined;
+  let filters: Filters = {};
 
   if (filterMode === "search") {
-    filters.search = q[SEARCH_QUERY_KEY] as string | undefined;
+    search = q[SEARCH_QUERY_KEY] as string | undefined;
   } else if (filterMode === "filter") {
     const filtered = Object.fromEntries(
-      Object.entries(q).filter(
-        ([key]) => !RESERVED_QUERY_KEYS.includes(key as any),
-      ),
+      Object.entries(q)
+        .filter(([key]) => !RESERVED_QUERY_KEYS.includes(key as any))
+        .map(([key, value]) => {
+          const explodedValue = (value as string).split(",");
+          return [key, explodedValue];
+        }),
     );
     filters = { ...filtered };
   } else {
@@ -31,6 +35,7 @@ export function parseFiltering({ query }: { query: unknown }): Filtering {
 
   return {
     filterMode,
+    search,
     filters,
   };
 }
