@@ -5,17 +5,21 @@ import {
   parseSorting,
   type Filtering,
   parseFiltering,
+  type BaseRequestQueryObject,
 } from "@mikevar/parse-data-grid-query";
 
-export function createDataGridQuery<TOrderByKey extends string>(options: {
-  query: unknown;
-  allowed: readonly TOrderByKey[];
-}) {
+export function createDataGridQuery<
+  TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
+  TOrderByKey extends string,
+>(options: { query: TRequestQuery; sortables: readonly TOrderByKey[] }) {
   return new DataGridQuery(options);
 }
 
-export class DataGridQuery<TOrderByKey extends string> {
-  private query: unknown;
+export class DataGridQuery<
+  TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
+  TOrderByKey extends string,
+> {
+  private query: TRequestQuery;
 
   private pagination: Pagination | undefined;
   private sorting: Sorting<TOrderByKey> | undefined;
@@ -23,20 +27,20 @@ export class DataGridQuery<TOrderByKey extends string> {
 
   constructor({
     query,
-    allowed,
+    sortables,
   }: {
-    query: unknown;
-    allowed: readonly TOrderByKey[];
+    query: TRequestQuery;
+    sortables: readonly TOrderByKey[];
   }) {
     this.query = query;
 
     this.pagination = this.parsePagination();
-    this.sorting = this.parseSorting({ allowed });
+    this.sorting = this.parseSorting({ allowed: sortables });
     this.filtering = this.parseFiltering();
   }
 
   private parsePagination(): Pagination | undefined {
-    return parsePagination({ query: this.query });
+    return parsePagination<TRequestQuery, TOrderByKey>({ query: this.query });
   }
 
   private parseSorting({
@@ -44,11 +48,14 @@ export class DataGridQuery<TOrderByKey extends string> {
   }: {
     allowed: readonly TOrderByKey[];
   }): Sorting<TOrderByKey> | undefined {
-    return parseSorting({ query: this.query, allowed });
+    return parseSorting<TRequestQuery, TOrderByKey>({
+      query: this.query,
+      allowed,
+    });
   }
 
   private parseFiltering(): Filtering {
-    return parseFiltering({ query: this.query });
+    return parseFiltering<TRequestQuery, TOrderByKey>({ query: this.query });
   }
 
   getPagination(): Pagination {
