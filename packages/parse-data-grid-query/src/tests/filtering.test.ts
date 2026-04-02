@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { parseFiltering } from "../filtering";
+import { parseFiltering } from "../filtering.ts";
 
 describe("parseFiltering", () => {
   it("uses defaults when query is empty", () => {
     const result = parseFiltering({ query: {} });
 
-    expect(result).toEqual({ search: undefined });
+    expect(result).toEqual({ filterMode: undefined, filters: {} });
   });
 
   it("parses valid filter mode", () => {
@@ -13,7 +13,10 @@ describe("parseFiltering", () => {
       query: { filterMode: "search", search: "test" },
     });
 
-    expect(result).toEqual({ search: "test" });
+    expect(result).toEqual({
+      filterMode: "search",
+      filters: { search: "test" },
+    });
   });
 
   it("parses filter mode with other query params", () => {
@@ -21,7 +24,10 @@ describe("parseFiltering", () => {
       query: { filterMode: "filter", name: "test", age: "25" },
     });
 
-    expect(result).toEqual({ name: "test", age: "25" });
+    expect(result).toEqual({
+      filterMode: "filter",
+      filters: { name: "test", age: "25" },
+    });
   });
 
   it("handles invalid filter mode", () => {
@@ -29,6 +35,9 @@ describe("parseFiltering", () => {
       query: { filterMode: "invalid", name: "test" },
     });
 
-    expect(result).toEqual({});
+    expect(result).toEqual({
+      filterMode: "invalid",
+      filters: {},
+    });
   });
 });

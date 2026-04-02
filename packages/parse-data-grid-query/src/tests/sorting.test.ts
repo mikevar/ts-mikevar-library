@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseSortingOrder, parseSortingOrderBy } from "../sorting";
+import { parseSortingOrder, parseSortingOrderBy } from "../sorting.ts";
 
 describe("parseSortingOrder", () => {
   it("uses defaults when query is empty", () => {
