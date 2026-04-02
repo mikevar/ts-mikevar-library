@@ -32,8 +32,8 @@ export function parseFiltering<
       Object.entries(q)
         .filter(([key]) => !RESERVED_QUERY_KEYS.includes(key as any))
         .map(([key, value]) => {
-          const explodedValue = (value as string).split(",");
-          return [key, explodedValue];
+          const explodedValues = (value as string).split(",");
+          return [key, explodedValues];
         }),
     );
     filters = { ...filtered };
