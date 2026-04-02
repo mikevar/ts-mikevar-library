@@ -15,7 +15,8 @@ describe("parseFiltering", () => {
 
     expect(result).toEqual({
       filterMode: "search",
-      filters: { search: "test" },
+      filters: {},
+      search: "test",
     });
   });
 
@@ -26,7 +27,10 @@ describe("parseFiltering", () => {
 
     expect(result).toEqual({
       filterMode: "filter",
-      filters: { name: "test", age: "25" },
+      filters: {
+        name: ["test"],
+        age: ["25"],
+      },
     });
   });
 
@@ -38,6 +42,7 @@ describe("parseFiltering", () => {
     expect(result).toEqual({
       filterMode: "invalid",
       filters: {},
+      search: undefined,
     });
   });
 });
