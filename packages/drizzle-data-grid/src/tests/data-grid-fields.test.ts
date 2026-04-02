@@ -1,21 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { pgTable, integer, text } from "drizzle-orm/pg-core";
 import { DataGridFields, createDataGridFields } from "../data-grid-fields.ts";
 import type { Fields } from "../types.ts";
-
-const schema = {
-  roles: pgTable("roles", {
-    id: integer("id").primaryKey(),
-    name: text("name"),
-  }),
-  users: pgTable("users", {
-    id: integer("id").primaryKey(),
-    name: text("name"),
-    username: text("username"),
-    roleId: integer("role_id"),
-    passwordHash: text("password_hash"),
-  }),
-};
+import * as schema from "./schema.ts";
 
 describe("DataGridFields", () => {
   type SortableKeys =
