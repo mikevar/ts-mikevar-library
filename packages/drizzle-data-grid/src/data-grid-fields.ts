@@ -6,6 +6,14 @@ import type {
   SortableFields,
 } from "./types.ts";
 
+export function createDataGridFields<TKey extends string>({
+  fields,
+}: {
+  fields: Fields<TKey>;
+}) {
+  return new DataGridFields<TKey>({ fields });
+}
+
 export class DataGridFields<TKey extends string> {
   private fields: Fields<TKey>;
   private sortableFields: SortableFields<TKey> | undefined;
@@ -15,9 +23,9 @@ export class DataGridFields<TKey extends string> {
   constructor({ fields }: { fields: Fields<TKey> }) {
     this.fields = fields;
 
-    this.sortableFields = {} as SortableFields<TKey>;
-    this.searchableFields = {} as SearchableFields<TKey>;
-    this.filterableFields = {} as FilterableFields<TKey>;
+    this.parseSortableFields();
+    this.parseSearchableFields();
+    this.parseFilterableFields();
   }
 
   private parseSortableFields() {
