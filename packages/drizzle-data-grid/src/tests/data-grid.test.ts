@@ -222,14 +222,14 @@ describe("DataGrid", () => {
     });
   });
 
-  describe("actual memory db tests", () => {
-    beforeEach(() => {
-      db.insert(schema.users)
-        .values([
-          { id: 1, name: "john" },
-          { id: 2, name: "jane" },
-        ])
-        .run();
-    });
-  });
+  // describe("actual memory db tests", () => {
+  //   beforeEach(() => {
+  //     db.insert(schema.users)
+  //       .values([
+  //         { id: 1, name: "john" },
+  //         { id: 2, name: "jane" },
+  //       ])
+  //       .run();
+  //   });
+  // });
 });
