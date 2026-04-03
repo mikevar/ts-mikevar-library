@@ -11,7 +11,9 @@
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "main": "tsx src/main.ts"
+    "main": "tsx src/main.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
