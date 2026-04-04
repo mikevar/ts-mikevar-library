@@ -8,7 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 const CREATED_AT_FIELD = {
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 };
 
 const VARCHAR_CONFIG = { length: 255 };
