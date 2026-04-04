@@ -2,6 +2,7 @@
   "name": "express-ts-v5-example",
   "private": true,
   "dependencies": {
+    "@faker-js/faker": "^10.4.0",
     "@mikevar/drizzle-data-grid": "workspace:*",
     "@mikevar/parse-data-grid-query": "workspace:*",
     "dotenv": "^17.4.0",
@@ -13,7 +14,8 @@
     "dev": "tsx watch src/server.ts",
     "main": "tsx src/main.ts",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "seed": "tsx src/seed.ts"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
