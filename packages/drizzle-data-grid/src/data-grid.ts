@@ -28,6 +28,9 @@ import {
   type SQL,
   type AnyColumn,
   between,
+  asc,
+  desc,
+  count,
 } from "drizzle-orm";
 
 export function createDataGrid<
@@ -92,6 +95,7 @@ export class DataGrid<
     TItem
   >;
 
+  private orderBy: SQL | undefined = undefined;
   private filters: SQL | undefined = undefined;
 
   private items: TItem[] = [];
@@ -110,7 +114,24 @@ export class DataGrid<
     this.fields = fields;
     this.queryBuilders = queryBuilders;
 
+    this.buildOrderBy();
     this.buildFilters();
+  }
+
+  private buildOrderBy() {
+    const sorting = this.query.getSorting();
+    let key = sorting.orderBy! as TOrderByKey;
+    if (!key) {
+      key = Object.keys(this.fields.getFields())[0]! as TOrderByKey;
+    }
+    console.log(key);
+
+    const column = this.fields.getFields()[key].column;
+    if (sorting.order === "asc") {
+      this.orderBy = asc(column);
+    } else {
+      this.orderBy = desc(column);
+    }
   }
 
   private parseValue({
@@ -161,7 +182,8 @@ export class DataGrid<
     } else if (filtering.filterMode === "filter") {
       this.buildFilterModeFilters();
     } else {
-      throw new Error("Invalid filter mode");
+      // ADD CHECK IF STRICT
+      this.buildSearchModeFilters();
     }
   }
 
@@ -170,11 +192,11 @@ export class DataGrid<
     if (!filtering) {
       throw new Error("Filters are required");
     }
-    if (!filtering.search) {
-      throw new Error("Search is required");
-    }
+    // if (!filtering.search) {
+    //   throw new Error("Search is required");
+    // }
 
-    const search: string = filtering.search;
+    const search: string = filtering.search ?? "";
     const searchableFields = this.fields.getSearchableFields();
 
     const filters: SQL[] = [];
@@ -235,6 +257,12 @@ export class DataGrid<
       query: this.query,
       fields: this.fields,
       filters: this.filters,
+      orderBy: this.orderBy,
+      pagination: {
+        limit: this.query.getPagination()?.limit,
+        offset: this.query.getPagination()?.offset,
+      },
+      count,
     };
   }
 
@@ -256,7 +284,7 @@ export class DataGrid<
       ? itemsBase
       : itemsBase
           .where(this.filters)
-          .orderBy(this.query.getSorting()?.orderBy)
+          .orderBy(this.orderBy)
           .limit(this.query.getPagination()?.limit)
           .offset(this.query.getPagination()?.offset);
 
@@ -281,6 +309,10 @@ export class DataGrid<
 
   getQuery() {
     return this.query;
+  }
+
+  getOrderBy() {
+    return this.orderBy;
   }
 
   getFilters() {
@@ -341,5 +373,9 @@ export class DataGrid<
       data: this.getData(),
       meta: this.getMeta(),
     };
+  }
+
+  toJSON() {
+    return this.getResolvedDataGridQuery();
   }
 }
