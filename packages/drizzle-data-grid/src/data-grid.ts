@@ -124,7 +124,6 @@ export class DataGrid<
     if (!key) {
       key = Object.keys(this.fields.getFields())[0]! as TOrderByKey;
     }
-    console.log(key);
 
     const column = this.fields.getFields()[key].column;
     if (sorting.order === "asc") {
@@ -192,9 +191,6 @@ export class DataGrid<
     if (!filtering) {
       throw new Error("Filters are required");
     }
-    // if (!filtering.search) {
-    //   throw new Error("Search is required");
-    // }
 
     const search: string = filtering.search ?? "";
     const searchableFields = this.fields.getSearchableFields();
