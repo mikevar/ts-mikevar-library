@@ -3,7 +3,7 @@ import type { BaseRequestQueryObject } from "@mikevar/parse-data-grid-query";
 import { DataGridFields } from "./data-grid-fields.ts";
 import { DataGridQuery } from "./data-grid-query.ts";
 
-export type FieldColumn = AnyColumn | SQLWrapper | SQL<any> | SQL.Aliased<any>;
+export type FieldColumn = any | unknown;
 export type FilterType = "string" | "number" | "boolean" | "date";
 
 export type Field = {
