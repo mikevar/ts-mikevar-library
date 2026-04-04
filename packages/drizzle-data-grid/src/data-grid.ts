@@ -350,6 +350,10 @@ export class DataGrid<
     return this.query.getPagination().page - 1;
   }
 
+  getPageOutOfBounds() {
+    return this.query.getPagination().page > this.getTotalPages();
+  }
+
   getData() {
     return {
       items: this.getItems(),
@@ -365,6 +369,7 @@ export class DataGrid<
       hasPreviousPage: this.getHasPreviousPage(),
       nextPage: this.getNextPage(),
       previousPage: this.getPreviousPage(),
+      pageOutOfBounds: this.getPageOutOfBounds(),
     };
   }
 
