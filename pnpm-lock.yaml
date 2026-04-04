@@ -39,6 +39,9 @@ importers:
 
   examples/express-ts-v5:
     dependencies:
+      '@faker-js/faker':
+        specifier: ^10.4.0
+        version: 10.4.0
       '@mikevar/drizzle-data-grid':
         specifier: workspace:*
         version: link:../../packages/drizzle-data-grid
@@ -547,6 +550,10 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@faker-js/faker@10.4.0':
+    resolution: {integrity: sha512-sDBWI3yLy8EcDzgobvJTWq1MJYzAkQdpjXuPukga9wXonhpMRvd1Izuo2Qgwey2OiEoRIBr35RMU9HJRoOHzpw==}
+    engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
 
   '@gar/promise-retry@1.0.3':
     resolution: {integrity: sha512-GmzA9ckNokPypTg10pgpeHNQe7ph+iIKKmhKu3Ob9ANkswreCx7R3cKmY781K8QK3AqVL3xVh9A42JvIAbkkSA==}
@@ -2301,6 +2308,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.27.4':
     optional: true
+
+  '@faker-js/faker@10.4.0': {}
 
   '@gar/promise-retry@1.0.3':
     optional: true
