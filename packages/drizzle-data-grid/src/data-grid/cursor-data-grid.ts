@@ -55,7 +55,7 @@ export class CursorDataGrid<
     const itemsFn = itemsQBIsFn
       ? (itemsQB as any)
       : async (args: {
-          filters: any;
+          wheres: any;
           orderBy: any;
           pagination: {
             limit: number;
@@ -63,7 +63,7 @@ export class CursorDataGrid<
           };
         }) => {
           return itemsQB
-            .where(args.filters)
+            .where(args.wheres)
             .orderBy(args.orderBy)
             .limit(args.pagination.queryLimit);
         };
