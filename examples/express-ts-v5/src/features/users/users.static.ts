@@ -2,9 +2,9 @@ import type { Fields } from "@mikevar/drizzle-data-grid";
 import { eq } from "drizzle-orm";
 import { db } from "../../db";
 import * as schema from "../../schema";
-import type { UsersOrderByKey } from "./users.types";
+import type { UsersForDataGridOrderByKey } from "./users.types";
 
-export const usersDataGridFields: Fields<UsersOrderByKey> = {
+export const usersDataGridFields: Fields<UsersForDataGridOrderByKey> = {
   id: {
     column: schema.users.id,
     type: "number",
