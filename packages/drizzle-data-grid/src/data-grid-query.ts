@@ -11,7 +11,11 @@ import {
 export function createDataGridQuery<
   TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
   TOrderByKey extends string,
->(options: { query: TRequestQuery; sortables: readonly TOrderByKey[] }) {
+>(options: {
+  query: TRequestQuery;
+  sortables: readonly TOrderByKey[];
+  strict?: boolean;
+}) {
   return new DataGridQuery(options);
 }
 
@@ -19,6 +23,8 @@ export class DataGridQuery<
   TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
   TOrderByKey extends string,
 > {
+  private strict: boolean | undefined;
+
   private query: TRequestQuery;
 
   private pagination: Pagination | undefined;
@@ -28,10 +34,13 @@ export class DataGridQuery<
   constructor({
     query,
     sortables,
+    strict = true,
   }: {
     query: TRequestQuery;
     sortables: readonly TOrderByKey[];
+    strict?: boolean;
   }) {
+    this.strict = strict;
     this.query = query;
 
     this.buildPagination();
@@ -42,6 +51,9 @@ export class DataGridQuery<
   private buildPagination(): void {
     this.pagination = parsePagination<TRequestQuery, TOrderByKey>({
       query: this.query,
+      options: {
+        strict: this.strict!,
+      },
     });
   }
 
@@ -49,12 +61,18 @@ export class DataGridQuery<
     this.sorting = parseSorting<TRequestQuery, TOrderByKey>({
       query: this.query,
       allowed,
+      options: {
+        strict: this.strict!,
+      },
     });
   }
 
   private buildFiltering(): void {
     this.filtering = parseFiltering<TRequestQuery, TOrderByKey>({
       query: this.query,
+      options: {
+        strict: this.strict!,
+      },
     });
   }
 
