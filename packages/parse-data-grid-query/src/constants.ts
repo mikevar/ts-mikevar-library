@@ -4,7 +4,6 @@ import { PaginationMode } from "./types.ts";
  * Default cursor for cursor-based pagination
  */
 export const DEFAULT_CURSOR = "";
-
 /**
  * Default page number for pagination
  */
@@ -17,7 +16,10 @@ export const DEFAULT_LIMIT = 10;
  * Maximum limit for pagination
  */
 export const MAX_LIMIT = 100;
-
+/**
+ * Default strict mode for validation
+ */
+export const DEFAULT_STRICT = true;
 /**
  * Default pagination mode
  */
@@ -27,17 +29,14 @@ export const DEFAULT_PAGINATION_MODE: PaginationMode = "offset";
  * Query key for pagination mode
  */
 export const PAGINATION_MODE_QUERY_KEY = "paginationMode";
-
 /**
  * Query key for page parameter
  */
 export const PAGE_QUERY_KEY = "page";
-
 /**
  * Query key for cursor parameter
  */
 export const CURSOR_QUERY_KEY = "cursor";
-
 /**
  * Query key for limit parameter
  */

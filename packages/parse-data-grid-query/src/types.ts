@@ -17,6 +17,13 @@ export interface Sorting<TOrderByKey extends string> {
 }
 
 /**
+ * Parse sorting options
+ */
+export interface ParseSortingOptions {
+  strict?: boolean;
+}
+
+/**
  * Pagination mode for data grid queries
  */
 export type PaginationMode = "offset" | "cursor";
@@ -56,6 +63,7 @@ export interface BaseParsePaginationOptions {
   defaultPaginationMode?: PaginationMode;
   defaultLimit?: number;
   maxLimit?: number;
+  strict?: boolean;
 }
 
 /**
@@ -101,6 +109,13 @@ export interface Filtering {
   filterMode: FilterMode | undefined;
   search: string | undefined;
   filters: Filters;
+}
+
+/**
+ * Parse filtering options
+ */
+export interface ParseFilteringOptions {
+  strict?: boolean;
 }
 
 /**

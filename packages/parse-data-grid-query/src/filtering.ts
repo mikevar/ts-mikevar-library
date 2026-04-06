@@ -1,13 +1,16 @@
+import { ParseDataGridQueryError } from "./errors.ts";
 import {
   FILTER_MODE_QUERY_KEY,
   SEARCH_QUERY_KEY,
   RESERVED_QUERY_KEYS,
+  DEFAULT_STRICT,
 } from "./constants.ts";
 import type {
   BaseRequestQueryObject,
   FilterMode,
   Filtering,
   Filters,
+  ParseFilteringOptions,
 } from "./types.ts";
 
 /**
@@ -18,12 +21,26 @@ import type {
 export function parseFiltering<
   T extends BaseRequestQueryObject<TOrderByKey>,
   TOrderByKey extends string,
->({ query }: { query: T }): Filtering {
+>({
+  query,
+  options,
+}: {
+  query: T;
+  options?: ParseFilteringOptions;
+}): Filtering {
+  const strict = options?.strict ?? DEFAULT_STRICT;
+
   const q = query as Record<string, unknown>;
 
   const filterMode = q[FILTER_MODE_QUERY_KEY] as FilterMode | undefined;
   let search: string | undefined;
   let filters: Filters = {};
+
+  if (strict) {
+    if (filterMode && !["search", "filter"].includes(filterMode)) {
+      throw new ParseDataGridQueryError("Invalid filter mode");
+    }
+  }
 
   if (filterMode === "search") {
     search = q[SEARCH_QUERY_KEY] as string | undefined;
@@ -38,12 +55,10 @@ export function parseFiltering<
     );
     filters = { ...filtered };
   } else {
-    // return empty object for no filter mode
+    if (strict) {
+      throw new ParseDataGridQueryError("Invalid filter mode");
+    }
   }
 
-  return {
-    filterMode,
-    search,
-    filters,
-  };
+  return { filterMode, search, filters };
 }
