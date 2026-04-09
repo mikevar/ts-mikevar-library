@@ -1,4 +1,4 @@
-import { ParseDataGridQueryError } from "../../errors.ts";
+import { ParseDataGridQueryError } from "../../core/errors.ts";
 import {
   DEFAULT_LIMIT,
   DEFAULT_PAGE,
@@ -6,12 +6,12 @@ import {
   MAX_LIMIT,
   LIMIT_QUERY_KEY,
   PAGE_QUERY_KEY,
-} from "../../constants.ts";
+} from "../../core/constants.ts";
 import type {
   BaseRequestQueryObject,
   OffsetPagination,
   OffsetParsePaginationOptions,
-} from "../../types.ts";
+} from "../../core/types.ts";
 import { toNumber, calculateOffset } from "../functions.ts";
 
 /**

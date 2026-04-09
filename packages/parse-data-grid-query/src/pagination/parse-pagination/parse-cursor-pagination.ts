@@ -1,4 +1,4 @@
-import { ParseDataGridQueryError } from "../../errors.ts";
+import { ParseDataGridQueryError } from "../../core/errors.ts";
 import {
   DEFAULT_LIMIT,
   DEFAULT_CURSOR,
@@ -6,12 +6,12 @@ import {
   LIMIT_QUERY_KEY,
   CURSOR_QUERY_KEY,
   DEFAULT_STRICT,
-} from "../../constants.ts";
+} from "../../core/constants.ts";
 import type {
   BaseRequestQueryObject,
   CursorPagination,
   CursorParsePaginationOptions,
-} from "../../types.ts";
+} from "../../core/types.ts";
 import { toNumber } from "../functions.ts";
 
 /**
