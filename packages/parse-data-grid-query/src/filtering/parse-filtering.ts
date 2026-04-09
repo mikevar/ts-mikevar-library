@@ -1,17 +1,17 @@
-import { ParseDataGridQueryError } from "./errors.ts";
+import { ParseDataGridQueryError } from "../errors.ts";
 import {
   FILTER_MODE_QUERY_KEY,
   SEARCH_QUERY_KEY,
   RESERVED_QUERY_KEYS,
   DEFAULT_STRICT,
-} from "./constants.ts";
+} from "../constants.ts";
 import type {
   BaseRequestQueryObject,
   FilterMode,
   Filtering,
   Filters,
   ParseFilteringOptions,
-} from "./types.ts";
+} from "../types.ts";
 
 /**
  * Parses filtering configuration from query parameters
