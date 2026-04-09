@@ -10,26 +10,26 @@ import type { ParseSortingOptions } from "../types.ts";
  * @param options - Optional configuration for sorting defaults and limits
  * @returns The sorting order by key or undefined if not allowed
  */
-export function parseSortingOrderBy<TOrderByKey extends string>({
+export function parseSortingOrderBy<TOrderColumnKey extends string>({
   query,
   allowed,
   defaultOrderBy,
   options,
 }: {
   query: unknown;
-  allowed: readonly TOrderByKey[];
-  defaultOrderBy?: TOrderByKey | undefined;
+  allowed: readonly TOrderColumnKey[];
+  defaultOrderBy?: TOrderColumnKey | undefined;
   options?: ParseSortingOptions | undefined;
-}): TOrderByKey | undefined {
+}): TOrderColumnKey | undefined {
   if (allowed.length === 0) {
     throw new ParseDataGridQueryError("Allowed array cannot be empty");
   }
 
   let strict = options?.strict ?? DEFAULT_STRICT;
 
-  let orderBy: TOrderByKey | undefined = (
+  let orderBy: TOrderColumnKey | undefined = (
     query as {
-      [ORDER_BY_QUERY_KEY]?: TOrderByKey;
+      [ORDER_BY_QUERY_KEY]?: TOrderColumnKey;
     }
   )?.[ORDER_BY_QUERY_KEY];
 

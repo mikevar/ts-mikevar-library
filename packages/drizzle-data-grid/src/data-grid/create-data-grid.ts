@@ -6,8 +6,8 @@ import { OffsetDataGrid } from "./offset-data-grid.ts";
 import { CursorDataGrid } from "./cursor-data-grid.ts";
 
 export function createDataGrid<
-  TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
   TItem = any,
 >({
   query,
@@ -16,16 +16,16 @@ export function createDataGrid<
 }: {
   query: {
     query: TRequestQuery;
-    allowed: readonly TOrderByKey[];
+    allowed: readonly TOrderColumnKey[];
   };
-  fields: Fields<TOrderByKey>;
-  queryBuilders: DataGridQueryBuilders<TRequestQuery, TOrderByKey, TItem>;
+  fields: Fields<TOrderColumnKey>;
+  queryBuilders: DataGridQueryBuilders<TRequestQuery, TOrderColumnKey, TItem>;
 }) {
-  const dataGridQuery = createDataGridQuery<TRequestQuery, TOrderByKey>({
+  const dataGridQuery = createDataGridQuery<TRequestQuery, TOrderColumnKey>({
     query: query.query,
     sortables: query.allowed,
   });
-  const dataGridFields = createDataGridFields<TOrderByKey>({ fields });
+  const dataGridFields = createDataGridFields<TOrderColumnKey>({ fields });
 
   if (dataGridQuery.getPagination().mode === "offset") {
     return new OffsetDataGrid({

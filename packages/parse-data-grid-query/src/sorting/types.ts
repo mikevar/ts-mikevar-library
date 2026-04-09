@@ -6,9 +6,9 @@ export type SortingOrder = "asc" | "desc";
 /**
  * Sorting configuration for data grid queries
  */
-export interface Sorting<TOrderByKey extends string> {
+export interface Sorting<TOrderColumnKey extends string> {
   order: SortingOrder;
-  orderBy: TOrderByKey | undefined;
+  orderBy: TOrderColumnKey | undefined;
 }
 
 /**

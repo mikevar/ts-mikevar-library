@@ -21,8 +21,8 @@ import { parseCursorPagination } from "./parse-cursor-pagination.ts";
  * @returns Pagination configuration with page, limit, and offset
  */
 export function parsePagination<
-  T extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  T extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
 >({
   query,
   options = {},
@@ -39,7 +39,7 @@ export function parsePagination<
     if (strict) {
       throw new ParseDataGridQueryError("Query must be an object");
     }
-    return parseOffsetPagination<T, TOrderByKey>({
+    return parseOffsetPagination<T, TOrderColumnKey>({
       query,
       options: options as OffsetParsePaginationOptions,
     });
@@ -65,12 +65,12 @@ export function parsePagination<
   }
 
   if (paginationMode === "offset") {
-    return parseOffsetPagination<T, TOrderByKey>({
+    return parseOffsetPagination<T, TOrderColumnKey>({
       query,
       options: options as OffsetParsePaginationOptions,
     });
   } else if (paginationMode === "cursor") {
-    return parseCursorPagination<T, TOrderByKey>({
+    return parseCursorPagination<T, TOrderColumnKey>({
       query,
       options: options as CursorParsePaginationOptions,
     });

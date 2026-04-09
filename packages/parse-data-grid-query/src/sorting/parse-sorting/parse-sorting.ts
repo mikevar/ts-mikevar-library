@@ -12,8 +12,8 @@ import { parseSortingOrderBy } from "./parse-sorting-order-by.ts";
  * @returns Sorting configuration with order and orderBy
  */
 export function parseSorting<
-  TQuery extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  TQuery extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
 >({
   query,
   allowed,
@@ -21,12 +21,12 @@ export function parseSorting<
   options,
 }: {
   query: TQuery;
-  allowed: readonly TOrderByKey[];
-  defaultOrderBy?: TOrderByKey;
+  allowed: readonly TOrderColumnKey[];
+  defaultOrderBy?: TOrderColumnKey;
   options?: ParseSortingOptions | undefined;
-}): Sorting<TOrderByKey> {
+}): Sorting<TOrderColumnKey> {
   const order = parseSortingOrder({ query, options });
-  const orderBy = parseSortingOrderBy<TOrderByKey>({
+  const orderBy = parseSortingOrderBy<TOrderColumnKey>({
     query,
     allowed,
     defaultOrderBy,

@@ -49,30 +49,30 @@ export type FilterOperator =
   | "inArray";
 
 export interface DataGridQueryBuilderArgs<
-  TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
 > {
-  query: DataGridQuery<TRequestQuery, TOrderByKey>;
-  fields: DataGridFields<TOrderByKey>;
+  query: DataGridQuery<TRequestQuery, TOrderColumnKey>;
+  fields: DataGridFields<TOrderColumnKey>;
   filters: SQL | undefined;
 }
 
 export type QueryResult<T> = Promise<T>;
 
 export interface DataGridQueryBuilders<
-  TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
   TItem = any,
 > {
   items:
     | unknown
     | ((
-        args: DataGridQueryBuilderArgs<TRequestQuery, TOrderByKey>,
+        args: DataGridQueryBuilderArgs<TRequestQuery, TOrderColumnKey>,
       ) => Promise<TItem[]>);
 
   total:
     | unknown
     | ((
-        args: DataGridQueryBuilderArgs<TRequestQuery, TOrderByKey>,
+        args: DataGridQueryBuilderArgs<TRequestQuery, TOrderColumnKey>,
       ) => Promise<{ count: number } | { count: number }[]>);
 }

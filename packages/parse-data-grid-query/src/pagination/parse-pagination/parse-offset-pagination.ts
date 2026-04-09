@@ -21,8 +21,8 @@ import { toNumber, calculateOffset } from "../functions.ts";
  * @returns Pagination configuration with page, limit, and offset
  */
 export function parseOffsetPagination<
-  T extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  T extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
 >({
   query,
   options = {},

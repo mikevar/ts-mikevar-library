@@ -6,10 +6,10 @@ import type {
 import { DataGrid } from "./data-grid.ts";
 
 export class CursorDataGrid<
-  TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
   TItem = any,
-> extends DataGrid<TRequestQuery, TOrderByKey, TItem> {
+> extends DataGrid<TRequestQuery, TOrderColumnKey, TItem> {
   protected constructWheres() {
     const pagination = this.query.getPagination() as CursorPagination;
     const sorting = this.query.getSorting();

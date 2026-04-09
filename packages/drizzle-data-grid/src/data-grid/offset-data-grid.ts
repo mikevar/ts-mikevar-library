@@ -6,10 +6,10 @@ import type {
 import { DataGrid } from "./data-grid.ts";
 
 export class OffsetDataGrid<
-  TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
   TItem = any,
-> extends DataGrid<TRequestQuery, TOrderByKey, TItem> {
+> extends DataGrid<TRequestQuery, TOrderColumnKey, TItem> {
   protected constructWheres() {
     return this.filters;
   }

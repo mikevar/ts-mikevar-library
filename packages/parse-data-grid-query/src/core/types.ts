@@ -5,13 +5,13 @@ import type { SortingOrder } from "../sorting/types.ts";
 /**
  * Base request query object for data grid queries
  */
-export type BaseRequestQueryObject<TOrderByKey extends string> = {
+export type BaseRequestQueryObject<TOrderColumnKey extends string> = {
   paginationMode: PaginationMode;
   page?: number;
   cursor?: string;
   limit: number;
   order: SortingOrder;
-  orderBy: TOrderByKey;
+  orderBy: TOrderColumnKey;
   filterMode: FilterMode;
   search?: string;
 };

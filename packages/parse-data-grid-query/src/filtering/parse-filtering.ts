@@ -19,8 +19,8 @@ import type {
  * @returns Filtering configuration with search or filter mode
  */
 export function parseFiltering<
-  T extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  T extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
 >({
   query,
   options,

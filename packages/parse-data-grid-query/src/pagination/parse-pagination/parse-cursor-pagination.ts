@@ -21,8 +21,8 @@ import { toNumber } from "../functions.ts";
  * @returns Pagination configuration with cursor and limit
  */
 export function parseCursorPagination<
-  T extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  T extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
 >({
   query,
   options = {},

@@ -9,26 +9,26 @@ import {
 } from "@mikevar/parse-data-grid-query";
 
 export function createDataGridQuery<
-  TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
 >(options: {
   query: TRequestQuery;
-  sortables: readonly TOrderByKey[];
+  sortables: readonly TOrderColumnKey[];
   strict?: boolean;
 }) {
   return new DataGridQuery(options);
 }
 
 export class DataGridQuery<
-  TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
 > {
   private strict: boolean | undefined;
 
   private query: TRequestQuery;
 
   private pagination: Pagination | undefined;
-  private sorting: Sorting<TOrderByKey> | undefined;
+  private sorting: Sorting<TOrderColumnKey> | undefined;
   private filtering: Filtering | undefined;
 
   constructor({
@@ -37,7 +37,7 @@ export class DataGridQuery<
     strict = true,
   }: {
     query: TRequestQuery;
-    sortables: readonly TOrderByKey[];
+    sortables: readonly TOrderColumnKey[];
     strict?: boolean;
   }) {
     this.strict = strict;
@@ -49,7 +49,7 @@ export class DataGridQuery<
   }
 
   private buildPagination(): void {
-    this.pagination = parsePagination<TRequestQuery, TOrderByKey>({
+    this.pagination = parsePagination<TRequestQuery, TOrderColumnKey>({
       query: this.query,
       options: {
         strict: this.strict!,
@@ -57,8 +57,12 @@ export class DataGridQuery<
     });
   }
 
-  private buildSorting({ allowed }: { allowed: readonly TOrderByKey[] }): void {
-    this.sorting = parseSorting<TRequestQuery, TOrderByKey>({
+  private buildSorting({
+    allowed,
+  }: {
+    allowed: readonly TOrderColumnKey[];
+  }): void {
+    this.sorting = parseSorting<TRequestQuery, TOrderColumnKey>({
       query: this.query,
       allowed,
       options: {
@@ -68,7 +72,7 @@ export class DataGridQuery<
   }
 
   private buildFiltering(): void {
-    this.filtering = parseFiltering<TRequestQuery, TOrderByKey>({
+    this.filtering = parseFiltering<TRequestQuery, TOrderColumnKey>({
       query: this.query,
       options: {
         strict: this.strict!,
@@ -83,7 +87,7 @@ export class DataGridQuery<
     return this.pagination;
   }
 
-  getSorting(): Sorting<TOrderByKey> {
+  getSorting(): Sorting<TOrderColumnKey> {
     if (!this.sorting) {
       throw new Error("Sorting not parsed");
     }

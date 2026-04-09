@@ -19,15 +19,15 @@ import { filterOperators } from "../filter-operators.ts";
 import { parseValue, parseFieldKeyAndOperator } from "./functions.ts";
 
 export abstract class DataGrid<
-  TRequestQuery extends BaseRequestQueryObject<TOrderByKey>,
-  TOrderByKey extends string,
+  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
+  TOrderColumnKey extends string,
   TItem = any,
 > {
-  protected query: DataGridQuery<TRequestQuery, TOrderByKey>;
-  protected fields: DataGridFields<TOrderByKey>;
+  protected query: DataGridQuery<TRequestQuery, TOrderColumnKey>;
+  protected fields: DataGridFields<TOrderColumnKey>;
   protected queryBuilders: DataGridQueryBuilders<
     TRequestQuery,
-    TOrderByKey,
+    TOrderColumnKey,
     TItem
   >;
 
@@ -47,9 +47,9 @@ export abstract class DataGrid<
     fields,
     queryBuilders,
   }: {
-    query: DataGridQuery<TRequestQuery, TOrderByKey>;
-    fields: DataGridFields<TOrderByKey>;
-    queryBuilders: DataGridQueryBuilders<TRequestQuery, TOrderByKey, TItem>;
+    query: DataGridQuery<TRequestQuery, TOrderColumnKey>;
+    fields: DataGridFields<TOrderColumnKey>;
+    queryBuilders: DataGridQueryBuilders<TRequestQuery, TOrderColumnKey, TItem>;
   }) {
     this.query = query;
     this.fields = fields;
@@ -61,9 +61,9 @@ export abstract class DataGrid<
 
   protected buildOrderBy() {
     const sorting = this.query.getSorting();
-    let key = sorting.orderBy! as TOrderByKey;
+    let key = sorting.orderBy! as TOrderColumnKey;
     if (!key) {
-      key = Object.keys(this.fields.getFields())[0]! as TOrderByKey;
+      key = Object.keys(this.fields.getFields())[0]! as TOrderColumnKey;
     }
 
     this.orderByKey = key;
