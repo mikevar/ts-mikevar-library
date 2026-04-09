@@ -1,4 +1,7 @@
-import { DEFAULT_STRICT, ORDER_BY_QUERY_KEY } from "../../core/constants.ts";
+import {
+  DEFAULT_STRICT,
+  ORDER_COLUMN_QUERY_KEY,
+} from "../../core/constants.ts";
 import { ParseDataGridQueryError } from "../../core/errors.ts";
 import type { ParseSortingOptions } from "../types.ts";
 
@@ -29,9 +32,9 @@ export function parseSortingOrderColumn<TOrderColumnKey extends string>({
 
   let orderBy: TOrderColumnKey | undefined = (
     query as {
-      [ORDER_BY_QUERY_KEY]?: TOrderColumnKey;
+      [ORDER_COLUMN_QUERY_KEY]?: TOrderColumnKey;
     }
-  )?.[ORDER_BY_QUERY_KEY];
+  )?.[ORDER_COLUMN_QUERY_KEY];
 
   if (strict) {
     if (!orderBy) {

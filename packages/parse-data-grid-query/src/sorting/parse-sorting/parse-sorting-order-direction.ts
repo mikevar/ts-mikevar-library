@@ -1,4 +1,7 @@
-import { DEFAULT_STRICT, ORDER_QUERY_KEY } from "../../core/constants.ts";
+import {
+  DEFAULT_STRICT,
+  ORDER_DIRECTION_QUERY_KEY,
+} from "../../core/constants.ts";
 import { ParseDataGridQueryError } from "../../core/errors.ts";
 import type { ParseSortingOptions, SortingOrderDirection } from "../types.ts";
 
@@ -15,9 +18,9 @@ export function parseSortingOrderDirection({
   query: unknown;
   options?: ParseSortingOptions | undefined;
 }): SortingOrderDirection {
-  const rawOrder = (query as { [ORDER_QUERY_KEY]?: SortingOrderDirection })?.[
-    ORDER_QUERY_KEY
-  ];
+  const rawOrder = (
+    query as { [ORDER_DIRECTION_QUERY_KEY]?: SortingOrderDirection }
+  )?.[ORDER_DIRECTION_QUERY_KEY];
 
   const strict = options?.strict ?? DEFAULT_STRICT;
 

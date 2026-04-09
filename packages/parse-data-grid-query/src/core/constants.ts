@@ -44,11 +44,11 @@ export const LIMIT_QUERY_KEY = "limit";
 /**
  * Query key for order parameter
  */
-export const ORDER_QUERY_KEY = "order";
+export const ORDER_DIRECTION_QUERY_KEY = "order";
 /**
  * Query key for order by parameter
  */
-export const ORDER_BY_QUERY_KEY = "orderBy";
+export const ORDER_COLUMN_QUERY_KEY = "orderBy";
 /**
  * Query key for filter mode parameter
  */
@@ -66,8 +66,8 @@ export const RESERVED_QUERY_KEYS = [
   PAGE_QUERY_KEY,
   CURSOR_QUERY_KEY,
   LIMIT_QUERY_KEY,
-  ORDER_QUERY_KEY,
-  ORDER_BY_QUERY_KEY,
+  ORDER_DIRECTION_QUERY_KEY,
+  ORDER_COLUMN_QUERY_KEY,
   FILTER_MODE_QUERY_KEY,
   SEARCH_QUERY_KEY,
 ] as const;
