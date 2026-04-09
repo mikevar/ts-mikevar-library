@@ -1,13 +1,13 @@
 /**
  * Sorting order for data grid queries
  */
-export type SortingOrder = "asc" | "desc";
+export type SortingOrderDirection = "asc" | "desc";
 
 /**
  * Sorting configuration for data grid queries
  */
 export interface Sorting<TOrderColumnKey extends string> {
-  order: SortingOrder;
+  order: SortingOrderDirection;
   orderBy: TOrderColumnKey | undefined;
 }
 

@@ -1,6 +1,6 @@
 import type { FilterMode } from "../filtering/types.ts";
 import type { PaginationMode } from "../pagination/types.ts";
-import type { SortingOrder } from "../sorting/types.ts";
+import type { SortingOrderDirection } from "../sorting/types.ts";
 
 /**
  * Base request query object for data grid queries
@@ -10,7 +10,7 @@ export type BaseRequestQueryObject<TOrderColumnKey extends string> = {
   page?: number;
   cursor?: string;
   limit: number;
-  order: SortingOrder;
+  order: SortingOrderDirection;
   orderBy: TOrderColumnKey;
   filterMode: FilterMode;
   search?: string;
