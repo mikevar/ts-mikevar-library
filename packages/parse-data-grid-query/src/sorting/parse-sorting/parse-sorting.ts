@@ -1,6 +1,6 @@
 import type { BaseRequestQueryObject } from "../../core/types.ts";
 import type { ParseSortingOptions, Sorting } from "../types.ts";
-import { parseSortingOrderDirection } from "./parse-sorting-order.ts";
+import { parseSortingOrderDirection } from "./parse-sorting-order-direction.ts";
 import { parseSortingOrderColumn } from "./parse-sorting-order-column.ts";
 
 /**
