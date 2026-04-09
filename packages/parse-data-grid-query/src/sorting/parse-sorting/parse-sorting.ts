@@ -1,7 +1,7 @@
 import type { BaseRequestQueryObject } from "../../core/types.ts";
 import type { ParseSortingOptions, Sorting } from "../types.ts";
 import { parseSortingOrder } from "./parse-sorting-order.ts";
-import { parseSortingOrderBy } from "./parse-sorting-order-by.ts";
+import { parseSortingOrderColumn } from "./parse-sorting-order-column.ts";
 
 /**
  * Parses sorting configuration from query parameters
@@ -26,7 +26,7 @@ export function parseSorting<
   options?: ParseSortingOptions | undefined;
 }): Sorting<TOrderColumnKey> {
   const order = parseSortingOrder({ query, options });
-  const orderBy = parseSortingOrderBy<TOrderColumnKey>({
+  const orderBy = parseSortingOrderColumn<TOrderColumnKey>({
     query,
     allowed,
     defaultOrderBy,

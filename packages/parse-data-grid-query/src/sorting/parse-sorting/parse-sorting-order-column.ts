@@ -10,7 +10,7 @@ import type { ParseSortingOptions } from "../types.ts";
  * @param options - Optional configuration for sorting defaults and limits
  * @returns The sorting order by key or undefined if not allowed
  */
-export function parseSortingOrderBy<TOrderColumnKey extends string>({
+export function parseSortingOrderColumn<TOrderColumnKey extends string>({
   query,
   allowed,
   defaultOrderBy,
