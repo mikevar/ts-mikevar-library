@@ -1,6 +1,6 @@
 import { DEFAULT_STRICT, ORDER_BY_QUERY_KEY } from "../../core/constants.ts";
 import { ParseDataGridQueryError } from "../../core/errors.ts";
-import type { ParseSortingOptions } from "../../core/types.ts";
+import type { ParseSortingOptions } from "../types.ts";
 
 /**
  * Parses the sorting order by from query parameters

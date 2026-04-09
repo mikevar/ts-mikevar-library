@@ -7,11 +7,11 @@ import {
   CURSOR_QUERY_KEY,
   DEFAULT_STRICT,
 } from "../../core/constants.ts";
+import type { BaseRequestQueryObject } from "../../core/types.ts";
 import type {
-  BaseRequestQueryObject,
   CursorPagination,
   CursorParsePaginationOptions,
-} from "../../core/types.ts";
+} from "../types.ts";
 import { toNumber } from "../functions.ts";
 
 /**

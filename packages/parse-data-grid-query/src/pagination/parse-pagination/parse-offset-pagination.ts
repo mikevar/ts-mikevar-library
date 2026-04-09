@@ -7,11 +7,11 @@ import {
   LIMIT_QUERY_KEY,
   PAGE_QUERY_KEY,
 } from "../../core/constants.ts";
+import type { BaseRequestQueryObject } from "../../core/types.ts";
 import type {
-  BaseRequestQueryObject,
   OffsetPagination,
   OffsetParsePaginationOptions,
-} from "../../core/types.ts";
+} from "../types.ts";
 import { toNumber, calculateOffset } from "../functions.ts";
 
 /**

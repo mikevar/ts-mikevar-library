@@ -5,13 +5,13 @@ import {
   RESERVED_QUERY_KEYS,
   DEFAULT_STRICT,
 } from "../core/constants.ts";
+import type { BaseRequestQueryObject } from "../core/types.ts";
 import type {
-  BaseRequestQueryObject,
   FilterMode,
   Filtering,
   Filters,
   ParseFilteringOptions,
-} from "../core/types.ts";
+} from "./types.ts";
 
 /**
  * Parses filtering configuration from query parameters

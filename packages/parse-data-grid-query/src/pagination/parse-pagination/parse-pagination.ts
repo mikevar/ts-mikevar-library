@@ -4,13 +4,13 @@ import {
   DEFAULT_STRICT,
   PAGINATION_MODE_QUERY_KEY,
 } from "../../core/constants.ts";
+import type { BaseRequestQueryObject } from "../../core/types.ts";
 import type {
-  BaseRequestQueryObject,
   Pagination,
   ParsePaginationOptions,
   OffsetParsePaginationOptions,
   CursorParsePaginationOptions,
-} from "../../core/types.ts";
+} from "../types.ts";
 import { parseOffsetPagination } from "./parse-offset-pagination.ts";
 import { parseCursorPagination } from "./parse-cursor-pagination.ts";
 
