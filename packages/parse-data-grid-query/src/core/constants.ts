@@ -1,4 +1,4 @@
-import { PaginationMode } from "./types.ts";
+import { PaginationMode } from "../pagination/types.ts";
 
 /**
  * Default cursor for cursor-based pagination
