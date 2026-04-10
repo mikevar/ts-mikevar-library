@@ -15,18 +15,14 @@ import * as schema from "../../schema";
 export async function getUsersForSelector({
   query,
 }: {
-  query: UsersForSelectorQuery;
+  query: Record<string, string>;
 }) {
-  const dataGrid = createCursorDataGrid<
-    UsersForSelectorQuery,
-    UsersForSelectorOrderByKey,
-    any
-  >({
+  const dataGrid = createCursorDataGrid<UsersForSelectorOrderByKey, any>({
     query: {
       query: {
         paginationMode: "cursor",
         cursor: query.cursor!,
-        limit: query.limit,
+        limit: query.limit!,
         order: "asc",
         orderBy: "id",
         filterMode: "search",
@@ -64,13 +60,9 @@ export async function getUsersForSelector({
 export async function getUsersForDataGrid({
   query,
 }: {
-  query: UsersForDataGridQuery;
+  query: Record<string, string>;
 }) {
-  const dataGrid = createDataGrid<
-    UsersForDataGridQuery,
-    UsersForDataGridOrderByKey,
-    any
-  >({
+  const dataGrid = createDataGrid<UsersForDataGridOrderByKey, any>({
     query: {
       query: query,
       allowed: ["id", "name", "email", "roleId", "roleName"],
