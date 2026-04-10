@@ -4,9 +4,7 @@ import {
   createDataGrid,
 } from "@mikevar/drizzle-data-grid";
 import type {
-  UsersForDataGridQuery,
   UsersForDataGridOrderByKey,
-  UsersForSelectorQuery,
   UsersForSelectorOrderByKey,
 } from "./users.types";
 import { db } from "../../db";
