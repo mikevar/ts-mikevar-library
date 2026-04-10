@@ -5,27 +5,20 @@ import {
   parseSorting,
   type Filtering,
   parseFiltering,
-  type BaseRequestQueryObject,
 } from "@mikevar/parse-data-grid-query";
 
-export function createDataGridQuery<
-  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
-  TOrderColumnKey extends string,
->(options: {
-  query: TRequestQuery;
+export function createDataGridQuery<TOrderColumnKey extends string>(options: {
+  query: Record<string, string>;
   sortables: readonly TOrderColumnKey[];
   strict?: boolean;
 }) {
   return new DataGridQuery(options);
 }
 
-export class DataGridQuery<
-  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
-  TOrderColumnKey extends string,
-> {
+export class DataGridQuery<TOrderColumnKey extends string> {
   private strict: boolean | undefined;
 
-  private query: TRequestQuery;
+  private query: Record<string, string>;
 
   private pagination: Pagination | undefined;
   private sorting: Sorting<TOrderColumnKey> | undefined;
@@ -36,7 +29,7 @@ export class DataGridQuery<
     sortables,
     strict = true,
   }: {
-    query: TRequestQuery;
+    query: Record<string, string>;
     sortables: readonly TOrderColumnKey[];
     strict?: boolean;
   }) {
@@ -49,7 +42,7 @@ export class DataGridQuery<
   }
 
   private buildPagination(): void {
-    this.pagination = parsePagination<TRequestQuery, TOrderColumnKey>({
+    this.pagination = parsePagination({
       query: this.query,
       options: {
         strict: this.strict!,
@@ -62,7 +55,7 @@ export class DataGridQuery<
   }: {
     allowed: readonly TOrderColumnKey[];
   }): void {
-    this.sorting = parseSorting<TRequestQuery, TOrderColumnKey>({
+    this.sorting = parseSorting<TOrderColumnKey>({
       query: this.query,
       allowed,
       options: {
@@ -72,7 +65,7 @@ export class DataGridQuery<
   }
 
   private buildFiltering(): void {
-    this.filtering = parseFiltering<TRequestQuery, TOrderColumnKey>({
+    this.filtering = parseFiltering({
       query: this.query,
       options: {
         strict: this.strict!,

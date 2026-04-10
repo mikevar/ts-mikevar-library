@@ -1,15 +1,11 @@
 import { count, type SQL } from "drizzle-orm";
-import type {
-  BaseRequestQueryObject,
-  OffsetPagination,
-} from "@mikevar/parse-data-grid-query";
+import type { OffsetPagination } from "@mikevar/parse-data-grid-query";
 import { DataGrid } from "./data-grid.ts";
 
 export class OffsetDataGrid<
-  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
   TOrderColumnKey extends string,
   TItem = any,
-> extends DataGrid<TRequestQuery, TOrderColumnKey, TItem> {
+> extends DataGrid<TOrderColumnKey, TItem> {
   protected constructWheres() {
     return this.filters;
   }

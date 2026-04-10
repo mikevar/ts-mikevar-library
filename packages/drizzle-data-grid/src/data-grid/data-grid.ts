@@ -1,35 +1,18 @@
-import { and, or, gt, lt, type SQL, asc, desc, count } from "drizzle-orm";
-import type {
-  FilterValue,
-  BaseRequestQueryObject,
-  OffsetPagination,
-  CursorPagination,
-} from "@mikevar/parse-data-grid-query";
+import { and, or, type SQL, asc, desc } from "drizzle-orm";
 import { DataGridQuery } from "../data-grid-query.ts";
 import { DataGridFields } from "../data-grid-fields.ts";
 import type {
   FieldColumn,
-  Fields,
-  FilterOperator,
-  FilterValueType,
   SearchableField,
   DataGridQueryBuilders,
 } from "../types.ts";
 import { filterOperators } from "../filter-operators.ts";
 import { parseValue, parseFieldKeyAndOperator } from "./functions.ts";
 
-export abstract class DataGrid<
-  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
-  TOrderColumnKey extends string,
-  TItem = any,
-> {
-  protected query: DataGridQuery<TRequestQuery, TOrderColumnKey>;
+export abstract class DataGrid<TOrderColumnKey extends string, TItem = any> {
+  protected query: DataGridQuery<TOrderColumnKey>;
   protected fields: DataGridFields<TOrderColumnKey>;
-  protected queryBuilders: DataGridQueryBuilders<
-    TRequestQuery,
-    TOrderColumnKey,
-    TItem
-  >;
+  protected queryBuilders: DataGridQueryBuilders<TOrderColumnKey, TItem>;
 
   protected orderByKey: string | undefined = undefined;
   protected orderByColumn: FieldColumn | undefined = undefined;
@@ -47,9 +30,9 @@ export abstract class DataGrid<
     fields,
     queryBuilders,
   }: {
-    query: DataGridQuery<TRequestQuery, TOrderColumnKey>;
+    query: DataGridQuery<TOrderColumnKey>;
     fields: DataGridFields<TOrderColumnKey>;
-    queryBuilders: DataGridQueryBuilders<TRequestQuery, TOrderColumnKey, TItem>;
+    queryBuilders: DataGridQueryBuilders<TOrderColumnKey, TItem>;
   }) {
     this.query = query;
     this.fields = fields;

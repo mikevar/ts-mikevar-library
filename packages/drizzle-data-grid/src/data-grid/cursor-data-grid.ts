@@ -1,15 +1,11 @@
 import { gt, lt, and, count, type SQL } from "drizzle-orm";
-import type {
-  BaseRequestQueryObject,
-  CursorPagination,
-} from "@mikevar/parse-data-grid-query";
+import type { CursorPagination } from "@mikevar/parse-data-grid-query";
 import { DataGrid } from "./data-grid.ts";
 
 export class CursorDataGrid<
-  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
   TOrderColumnKey extends string,
   TItem = any,
-> extends DataGrid<TRequestQuery, TOrderColumnKey, TItem> {
+> extends DataGrid<TOrderColumnKey, TItem> {
   protected constructWheres() {
     const pagination = this.query.getPagination() as CursorPagination;
     const sorting = this.query.getSorting();

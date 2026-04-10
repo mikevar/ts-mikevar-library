@@ -1,11 +1,9 @@
-import type { BaseRequestQueryObject } from "@mikevar/parse-data-grid-query";
 import { createDataGridQuery } from "../data-grid-query.ts";
 import { createDataGridFields } from "../data-grid-fields.ts";
 import type { Fields, DataGridQueryBuilders } from "../types.ts";
 import { CursorDataGrid } from "./cursor-data-grid.ts";
 
 export function createCursorDataGrid<
-  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
   TOrderColumnKey extends string,
   TItem = any,
 >({
@@ -14,13 +12,13 @@ export function createCursorDataGrid<
   queryBuilders,
 }: {
   query: {
-    query: TRequestQuery;
+    query: Record<string, string>;
     allowed: readonly TOrderColumnKey[];
   };
   fields: Fields<TOrderColumnKey>;
-  queryBuilders: DataGridQueryBuilders<TRequestQuery, TOrderColumnKey, TItem>;
+  queryBuilders: DataGridQueryBuilders<TOrderColumnKey, TItem>;
 }) {
-  const dataGridQuery = createDataGridQuery<TRequestQuery, TOrderColumnKey>({
+  const dataGridQuery = createDataGridQuery<TOrderColumnKey>({
     query: query.query,
     sortables: query.allowed,
   });

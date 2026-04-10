@@ -1,5 +1,4 @@
-import type { AnyColumn, SQL, SQLWrapper } from "drizzle-orm";
-import type { BaseRequestQueryObject } from "@mikevar/parse-data-grid-query";
+import type { SQL } from "drizzle-orm";
 import { DataGridFields } from "./data-grid-fields.ts";
 import { DataGridQuery } from "./data-grid-query.ts";
 
@@ -48,11 +47,8 @@ export type FilterOperator =
   | "isNull"
   | "inArray";
 
-export interface DataGridQueryBuilderArgs<
-  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
-  TOrderColumnKey extends string,
-> {
-  query: DataGridQuery<TRequestQuery, TOrderColumnKey>;
+export interface DataGridQueryBuilderArgs<TOrderColumnKey extends string> {
+  query: DataGridQuery<TOrderColumnKey>;
   fields: DataGridFields<TOrderColumnKey>;
   filters: SQL | undefined;
 }
@@ -60,19 +56,16 @@ export interface DataGridQueryBuilderArgs<
 export type QueryResult<T> = Promise<T>;
 
 export interface DataGridQueryBuilders<
-  TRequestQuery extends BaseRequestQueryObject<TOrderColumnKey>,
   TOrderColumnKey extends string,
   TItem = any,
 > {
   items:
     | unknown
-    | ((
-        args: DataGridQueryBuilderArgs<TRequestQuery, TOrderColumnKey>,
-      ) => Promise<TItem[]>);
+    | ((args: DataGridQueryBuilderArgs<TOrderColumnKey>) => Promise<TItem[]>);
 
   total:
     | unknown
     | ((
-        args: DataGridQueryBuilderArgs<TRequestQuery, TOrderColumnKey>,
+        args: DataGridQueryBuilderArgs<TOrderColumnKey>,
       ) => Promise<{ count: number } | { count: number }[]>);
 }
