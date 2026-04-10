@@ -7,7 +7,6 @@ import {
   CURSOR_QUERY_KEY,
   DEFAULT_STRICT,
 } from "../../core/constants.ts";
-import type { BaseRequestQueryObject } from "../../core/types.ts";
 import type {
   CursorPagination,
   CursorParsePaginationOptions,
@@ -20,14 +19,11 @@ import { toNumber } from "../functions.ts";
  * @param options - Optional configuration for pagination defaults and limits
  * @returns Pagination configuration with cursor and limit
  */
-export function parseCursorPagination<
-  T extends BaseRequestQueryObject<TOrderColumnKey>,
-  TOrderColumnKey extends string,
->({
+export function parseCursorPagination({
   query,
   options = {},
 }: {
-  query: T;
+  query: Record<string, string>;
   options?: CursorParsePaginationOptions;
 }): CursorPagination {
   const strict = options.strict ?? DEFAULT_STRICT;

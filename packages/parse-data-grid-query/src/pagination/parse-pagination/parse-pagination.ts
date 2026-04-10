@@ -4,7 +4,6 @@ import {
   DEFAULT_STRICT,
   PAGINATION_MODE_QUERY_KEY,
 } from "../../core/constants.ts";
-import type { BaseRequestQueryObject } from "../../core/types.ts";
 import type {
   Pagination,
   ParsePaginationOptions,
@@ -20,14 +19,11 @@ import { parseCursorPagination } from "./parse-cursor-pagination.ts";
  * @param options - Optional configuration for pagination defaults and limits
  * @returns Pagination configuration with page, limit, and offset
  */
-export function parsePagination<
-  T extends BaseRequestQueryObject<TOrderColumnKey>,
-  TOrderColumnKey extends string,
->({
+export function parsePagination({
   query,
   options = {},
 }: {
-  query: T;
+  query: Record<string, string>;
   options?: ParsePaginationOptions;
 }): Pagination {
   const strict = options.strict ?? DEFAULT_STRICT;
@@ -39,7 +35,7 @@ export function parsePagination<
     if (strict) {
       throw new ParseDataGridQueryError("Query must be an object");
     }
-    return parseOffsetPagination<T, TOrderColumnKey>({
+    return parseOffsetPagination({
       query,
       options: options as OffsetParsePaginationOptions,
     });
@@ -65,12 +61,12 @@ export function parsePagination<
   }
 
   if (paginationMode === "offset") {
-    return parseOffsetPagination<T, TOrderColumnKey>({
+    return parseOffsetPagination({
       query,
       options: options as OffsetParsePaginationOptions,
     });
   } else if (paginationMode === "cursor") {
-    return parseCursorPagination<T, TOrderColumnKey>({
+    return parseCursorPagination({
       query,
       options: options as CursorParsePaginationOptions,
     });

@@ -7,7 +7,6 @@ import {
   LIMIT_QUERY_KEY,
   PAGE_QUERY_KEY,
 } from "../../core/constants.ts";
-import type { BaseRequestQueryObject } from "../../core/types.ts";
 import type {
   OffsetPagination,
   OffsetParsePaginationOptions,
@@ -20,14 +19,11 @@ import { toNumber, calculateOffset } from "../functions.ts";
  * @param options - Optional configuration for pagination defaults and limits
  * @returns Pagination configuration with page, limit, and offset
  */
-export function parseOffsetPagination<
-  T extends BaseRequestQueryObject<TOrderColumnKey>,
-  TOrderColumnKey extends string,
->({
+export function parseOffsetPagination({
   query,
   options = {},
 }: {
-  query: T;
+  query: Record<string, string>;
   options?: OffsetParsePaginationOptions;
 }): OffsetPagination {
   const strict = options.strict ?? DEFAULT_STRICT;

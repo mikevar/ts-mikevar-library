@@ -5,7 +5,6 @@ import {
   RESERVED_QUERY_KEYS,
   DEFAULT_STRICT,
 } from "../core/constants.ts";
-import type { BaseRequestQueryObject } from "../core/types.ts";
 import type {
   FilterMode,
   Filtering,
@@ -18,14 +17,11 @@ import type {
  * @param query - The query object to parse
  * @returns Filtering configuration with search or filter mode
  */
-export function parseFiltering<
-  T extends BaseRequestQueryObject<TOrderColumnKey>,
-  TOrderColumnKey extends string,
->({
+export function parseFiltering({
   query,
   options,
 }: {
-  query: T;
+  query: Record<string, string>;
   options?: ParseFilteringOptions;
 }): Filtering {
   const strict = options?.strict ?? DEFAULT_STRICT;

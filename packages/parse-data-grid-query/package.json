@@ -2,12 +2,12 @@
   "name": "@mikevar/parse-data-grid-query",
   "version": "0.0.1",
   "type": "module",
-  "main": "./dist/index.cjs",
+  "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.js"
     }
   },
   "files": [

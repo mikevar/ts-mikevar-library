@@ -1,4 +1,3 @@
-import type { BaseRequestQueryObject } from "../../core/types.ts";
 import type { ParseSortingOptions, Sorting } from "../types.ts";
 import { parseSortingOrderDirection } from "./parse-sorting-order-direction.ts";
 import { parseSortingOrderColumn } from "./parse-sorting-order-column.ts";
@@ -11,16 +10,13 @@ import { parseSortingOrderColumn } from "./parse-sorting-order-column.ts";
  * @param options - Optional configuration for sorting defaults and limits
  * @returns Sorting configuration with order and orderBy
  */
-export function parseSorting<
-  TQuery extends BaseRequestQueryObject<TOrderColumnKey>,
-  TOrderColumnKey extends string,
->({
+export function parseSorting<TOrderColumnKey extends string>({
   query,
   allowed,
   defaultOrderBy,
   options,
 }: {
-  query: TQuery;
+  query: Record<string, string>;
   allowed: readonly TOrderColumnKey[];
   defaultOrderBy?: TOrderColumnKey;
   options?: ParseSortingOptions | undefined;
