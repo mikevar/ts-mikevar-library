@@ -115,6 +115,15 @@ export async function getUsersForDataGrid({
         .from(schema.users)
         .leftJoin(schema.roles, eq(schema.users.roleId, schema.roles.id)),
     },
+    queryKey: {
+      filterMode: "fm",
+      search: "s",
+      paginationMode: "pm",
+      page: "p",
+      limit: "l",
+      cursor: "c",
+      orders: "o",
+    },
   });
   await dataGrid.execute();
   return dataGrid.toJSON();
