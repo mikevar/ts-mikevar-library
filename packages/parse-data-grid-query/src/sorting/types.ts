@@ -17,6 +17,6 @@ export interface Sorting<TOrderColumnKey extends string> {
 export interface ParseSortingOptions {
   strict?: boolean;
   queryKey?: {
-    orders?: string;
+    orders?: string | undefined;
   };
 }

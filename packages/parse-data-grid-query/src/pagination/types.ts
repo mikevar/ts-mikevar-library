@@ -40,10 +40,10 @@ export interface BaseParsePaginationOptions {
   maxLimit?: number;
   strict?: boolean;
   queryKey?: {
-    paginationMode?: string;
-    page?: string;
-    limit?: string;
-    cursor?: string;
+    paginationMode?: string | undefined;
+    page?: string | undefined;
+    limit?: string | undefined;
+    cursor?: string | undefined;
   };
 }
 

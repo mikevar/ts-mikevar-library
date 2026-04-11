@@ -33,12 +33,12 @@ export interface Filtering {
 export interface ParseFilteringOptions {
   strict?: boolean;
   queryKey?: {
-    filterMode?: string;
-    search?: string;
-    paginationMode?: string;
-    page?: string;
-    limit?: string;
-    cursor?: string;
-    orders?: string;
+    filterMode?: string | undefined;
+    search?: string | undefined;
+    paginationMode?: string | undefined;
+    page?: string | undefined;
+    limit?: string | undefined;
+    cursor?: string | undefined;
+    orders?: string | undefined;
   };
 }

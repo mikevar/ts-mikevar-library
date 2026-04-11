@@ -7,11 +7,24 @@ import {
   parseFiltering,
 } from "@mikevar/parse-data-grid-query";
 
-export function createDataGridQuery<TOrderColumnKey extends string>(options: {
+export interface DataGridQueryConstructorArgs<TOrderColumnKey extends string> {
   query: Record<string, string>;
   sortables: readonly TOrderColumnKey[];
   strict?: boolean;
-}) {
+  queryKey?: {
+    filterMode?: string;
+    search?: string;
+    paginationMode?: string;
+    page?: string;
+    limit?: string;
+    cursor?: string;
+    orders?: string;
+  };
+}
+
+export function createDataGridQuery<TOrderColumnKey extends string>(
+  options: DataGridQueryConstructorArgs<TOrderColumnKey>,
+) {
   return new DataGridQuery(options);
 }
 
@@ -24,17 +37,17 @@ export class DataGridQuery<TOrderColumnKey extends string> {
   private sorting: Sorting<TOrderColumnKey>[] | undefined;
   private filtering: Filtering | undefined;
 
+  private queryKey: DataGridQueryConstructorArgs<TOrderColumnKey>["queryKey"];
+
   constructor({
     query,
     sortables,
     strict = true,
-  }: {
-    query: Record<string, string>;
-    sortables: readonly TOrderColumnKey[];
-    strict?: boolean;
-  }) {
+    queryKey,
+  }: DataGridQueryConstructorArgs<TOrderColumnKey>) {
     this.strict = strict;
     this.query = query;
+    this.queryKey = queryKey;
 
     this.buildPagination();
     this.buildSorting({ allowed: sortables });
@@ -46,6 +59,12 @@ export class DataGridQuery<TOrderColumnKey extends string> {
       query: this.query,
       options: {
         strict: this.strict!,
+        queryKey: {
+          paginationMode: this.queryKey?.paginationMode,
+          page: this.queryKey?.page,
+          limit: this.queryKey?.limit,
+          cursor: this.queryKey?.cursor,
+        },
       },
     });
   }
@@ -60,6 +79,9 @@ export class DataGridQuery<TOrderColumnKey extends string> {
       allowed,
       options: {
         strict: this.strict!,
+        queryKey: {
+          orders: this.queryKey?.orders,
+        },
       },
     });
   }
@@ -69,6 +91,7 @@ export class DataGridQuery<TOrderColumnKey extends string> {
       query: this.query,
       options: {
         strict: this.strict!,
+        queryKey: this.queryKey ?? {},
       },
     });
   }

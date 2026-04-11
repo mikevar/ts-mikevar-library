@@ -8,6 +8,7 @@ export function createDataGrid<TOrderColumnKey extends string, TItem = any>({
   query,
   fields,
   queryBuilders,
+  queryKey,
 }: {
   query: {
     query: Record<string, string>;
@@ -15,10 +16,20 @@ export function createDataGrid<TOrderColumnKey extends string, TItem = any>({
   };
   fields: Fields<TOrderColumnKey>;
   queryBuilders: DataGridQueryBuilders<TOrderColumnKey, TItem>;
+  queryKey?: {
+    filterMode?: string;
+    search?: string;
+    paginationMode?: string;
+    page?: string;
+    limit?: string;
+    cursor?: string;
+    orders?: string;
+  };
 }) {
   const dataGridQuery = createDataGridQuery<TOrderColumnKey>({
     query: query.query,
     sortables: query.allowed,
+    queryKey: queryKey ?? {},
   });
   const dataGridFields = createDataGridFields<TOrderColumnKey>({ fields });
 
