@@ -7,8 +7,8 @@ export type SortingOrderDirection = "asc" | "desc";
  * Sorting configuration for data grid queries
  */
 export interface Sorting<TOrderColumnKey extends string> {
-  order: SortingOrderDirection;
-  orderBy: TOrderColumnKey | undefined;
+  direction: SortingOrderDirection;
+  column: TOrderColumnKey | undefined;
 }
 
 /**

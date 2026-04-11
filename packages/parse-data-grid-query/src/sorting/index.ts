@@ -1,2 +1,2 @@
-export * from "./parse-sorting/index.ts";
+export * from "./parse-sorting.ts";
 export * from "./types.ts";
