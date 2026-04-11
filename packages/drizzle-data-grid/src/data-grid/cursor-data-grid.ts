@@ -9,10 +9,13 @@ export class CursorDataGrid<
   protected constructWheres() {
     const pagination = this.query.getPagination() as CursorPagination;
     const sorting = this.query.getSorting();
-    const cursorFilter = sorting.order === "asc" ? gt : lt;
+    const cursorFilter = sorting[0]!.direction === "asc" ? gt : lt;
     const wheres = this.filters
-      ? and(this.filters, cursorFilter(this.orderByColumn, pagination.cursor))
-      : cursorFilter(this.orderByColumn, pagination.cursor);
+      ? and(
+          this.filters,
+          cursorFilter(this.firstOrderByColumn, pagination.cursor),
+        )
+      : cursorFilter(this.firstOrderByColumn, pagination.cursor);
     return wheres;
   }
 
@@ -60,7 +63,7 @@ export class CursorDataGrid<
         }) => {
           return itemsQB
             .where(args.wheres)
-            .orderBy(args.orderBy)
+            .orderBy(...args.orderBy)
             .limit(args.pagination.queryLimit);
         };
     const totalFn = totalQBIsFn

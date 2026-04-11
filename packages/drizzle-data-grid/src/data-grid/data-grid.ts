@@ -15,8 +15,8 @@ export abstract class DataGrid<TOrderColumnKey extends string, TItem = any> {
   protected queryBuilders: DataGridQueryBuilders<TOrderColumnKey, TItem>;
 
   protected orderByKey: string | undefined = undefined;
-  protected orderByColumn: FieldColumn | undefined = undefined;
-  protected orderBy: SQL | undefined = undefined;
+  protected firstOrderByColumn: FieldColumn | undefined = undefined;
+  protected orderBy: SQL[] | undefined = undefined;
   protected filters: SQL | undefined = undefined;
 
   protected items: TItem[] = [];
@@ -44,19 +44,31 @@ export abstract class DataGrid<TOrderColumnKey extends string, TItem = any> {
 
   protected buildOrderBy() {
     const sorting = this.query.getSorting();
-    let key = sorting.orderBy! as TOrderColumnKey;
-    if (!key) {
-      key = Object.keys(this.fields.getFields())[0]! as TOrderColumnKey;
+    const orderBy = [];
+
+    if (sorting.length > 0) {
+      for (let i = 0; i < sorting.length; i++) {
+        const sort = sorting[i]!;
+        let key = sort.column as TOrderColumnKey;
+        const column = this.fields.getFields()[key].column;
+        orderBy.push(sort.direction === "asc" ? asc(column) : desc(column));
+        if (i === 0) {
+          this.firstOrderByColumn = column;
+        }
+      }
+    } else {
+      let key = sorting[0]!.column as TOrderColumnKey;
+      if (!key) {
+        key = Object.keys(this.fields.getFields())[0]! as TOrderColumnKey;
+      }
+      const column = this.fields.getFields()[key].column;
+      orderBy.push(
+        sorting[0]!.direction === "asc" ? asc(column) : desc(column),
+      );
+      this.firstOrderByColumn = column;
     }
 
-    this.orderByKey = key;
-    const column = this.fields.getFields()[key].column;
-    this.orderByColumn = column;
-    if (sorting.order === "asc") {
-      this.orderBy = asc(column);
-    } else {
-      this.orderBy = desc(column);
-    }
+    this.orderBy = orderBy.length > 0 ? orderBy : undefined;
   }
 
   protected buildFilters() {

@@ -54,7 +54,7 @@ export class OffsetDataGrid<
         }) => {
           return itemsQB
             .where(args.wheres)
-            .orderBy(args.orderBy)
+            .orderBy(...args.orderBy)
             .limit(args.pagination.limit)
             .offset(args.pagination.offset);
         };

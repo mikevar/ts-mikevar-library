@@ -21,7 +21,7 @@ export class DataGridQuery<TOrderColumnKey extends string> {
   private query: Record<string, string>;
 
   private pagination: Pagination | undefined;
-  private sorting: Sorting<TOrderColumnKey> | undefined;
+  private sorting: Sorting<TOrderColumnKey>[] | undefined;
   private filtering: Filtering | undefined;
 
   constructor({
@@ -80,7 +80,7 @@ export class DataGridQuery<TOrderColumnKey extends string> {
     return this.pagination;
   }
 
-  getSorting(): Sorting<TOrderColumnKey> {
+  getSorting(): Sorting<TOrderColumnKey>[] {
     if (!this.sorting) {
       throw new Error("Sorting not parsed");
     }
