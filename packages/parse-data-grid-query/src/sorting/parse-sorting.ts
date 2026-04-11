@@ -4,7 +4,7 @@ import type {
   SortingOrderDirection,
 } from "./types.ts";
 import { ParseDataGridQueryError } from "../core/errors.ts";
-import { DEFAULT_STRICT } from "../core/constants.ts";
+import { DEFAULT_STRICT, ORDERS_QUERY_KEY } from "../core/constants.ts";
 
 /**
  * Parses sorting configuration from query parameters
@@ -31,7 +31,9 @@ export function parseSorting<TOrderColumnKey extends string>({
 
   let strict = options?.strict ?? DEFAULT_STRICT;
 
-  const rawOrders = query.orders?.split(",") || [];
+  const ordersQueryKey = options?.queryKey?.orders ?? ORDERS_QUERY_KEY;
+
+  const rawOrders = query[ordersQueryKey]?.split(",") || [];
   const orders: Sorting<TOrderColumnKey>[] = [];
 
   if (rawOrders.length > 0) {

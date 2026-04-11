@@ -46,13 +46,18 @@ export function parseCursorPagination({
     };
   }
 
+  const {
+    cursor: cursorQueryKey = CURSOR_QUERY_KEY,
+    limit: limitQueryKey = LIMIT_QUERY_KEY,
+  } = options.queryKey ?? {};
+
   const q = query as {
-    [CURSOR_QUERY_KEY]?: unknown;
-    [LIMIT_QUERY_KEY]?: unknown;
+    [cursorQueryKey]?: unknown;
+    [limitQueryKey]?: unknown;
   };
 
-  const rawCursor = q[CURSOR_QUERY_KEY];
-  const rawLimit = toNumber(q[LIMIT_QUERY_KEY]);
+  const rawCursor = q[cursorQueryKey];
+  const rawLimit = toNumber(q[limitQueryKey]);
 
   if (strict) {
     if (typeof rawCursor !== "string") {

@@ -39,6 +39,12 @@ export interface BaseParsePaginationOptions {
   defaultLimit?: number;
   maxLimit?: number;
   strict?: boolean;
+  queryKey?: {
+    paginationMode?: string;
+    page?: string;
+    limit?: string;
+    cursor?: string;
+  };
 }
 
 /**

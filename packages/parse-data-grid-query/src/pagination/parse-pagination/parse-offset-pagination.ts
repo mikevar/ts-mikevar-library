@@ -47,13 +47,18 @@ export function parseOffsetPagination({
     };
   }
 
+  const {
+    page: pageQueryKey = PAGE_QUERY_KEY,
+    limit: limitQueryKey = LIMIT_QUERY_KEY,
+  } = options.queryKey ?? {};
+
   const q = query as {
-    [PAGE_QUERY_KEY]?: unknown;
-    [LIMIT_QUERY_KEY]?: unknown;
+    [pageQueryKey]?: unknown;
+    [limitQueryKey]?: unknown;
   };
 
-  const rawPage = toNumber(q[PAGE_QUERY_KEY]);
-  const rawLimit = toNumber(q[LIMIT_QUERY_KEY]);
+  const rawPage = toNumber(q[pageQueryKey]);
+  const rawLimit = toNumber(q[limitQueryKey]);
 
   if (strict) {
     if (typeof rawPage !== "number") {

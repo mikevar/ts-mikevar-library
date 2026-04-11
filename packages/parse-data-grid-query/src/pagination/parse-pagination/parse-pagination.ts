@@ -38,7 +38,10 @@ export function determinePaginationMode({
     return defaultPaginationMode;
   }
 
-  let paginationMode = (query as any)[PAGINATION_MODE_QUERY_KEY] as
+  const paginationModeQueryKey =
+    options.queryKey?.paginationMode ?? PAGINATION_MODE_QUERY_KEY;
+
+  let paginationMode = (query as any)[paginationModeQueryKey] as
     | "offset"
     | "cursor"
     | undefined;

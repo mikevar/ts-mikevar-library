@@ -50,6 +50,10 @@ export const ORDER_DIRECTION_QUERY_KEY = "order";
  */
 export const ORDER_COLUMN_QUERY_KEY = "orderBy";
 /**
+ * Query key for orders parameter
+ */
+export const ORDERS_QUERY_KEY = "orders";
+/**
  * Query key for filter mode parameter
  */
 export const FILTER_MODE_QUERY_KEY = "filterMode";
