@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { getUsersForDataGrid } from "./users.service";
+import { getUsersForDataGrid, getUsersForSelector } from "./users.service";
 
 const router: Router = Router();
 
 router.get("/for-selector", async (req, res) => {
   try {
-    const result = await getUsersForDataGrid({
+    const result = await getUsersForSelector({
       query: req.query as Record<string, string>,
     });
     res.json(result);
