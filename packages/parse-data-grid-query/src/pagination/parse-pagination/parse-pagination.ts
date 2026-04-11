@@ -14,18 +14,18 @@ import { parseOffsetPagination } from "./parse-offset-pagination.ts";
 import { parseCursorPagination } from "./parse-cursor-pagination.ts";
 
 /**
- * Parses pagination configuration from query parameters
+ * Determines the pagination mode from query parameters
  * @param query - The query object to parse
  * @param options - Optional configuration for pagination defaults and limits
- * @returns Pagination configuration with page, limit, and offset
+ * @returns The pagination mode ("offset" or "cursor")
  */
-export function parsePagination({
+export function determinePaginationMode({
   query,
   options = {},
 }: {
   query: Record<string, string>;
   options?: ParsePaginationOptions;
-}): Pagination {
+}): "offset" | "cursor" {
   const strict = options.strict ?? DEFAULT_STRICT;
 
   const defaultPaginationMode =
@@ -35,10 +35,7 @@ export function parsePagination({
     if (strict) {
       throw new ParseDataGridQueryError("Query must be an object");
     }
-    return parseOffsetPagination({
-      query,
-      options: options as OffsetParsePaginationOptions,
-    });
+    return defaultPaginationMode;
   }
 
   let paginationMode = (query as any)[PAGINATION_MODE_QUERY_KEY] as
@@ -59,6 +56,25 @@ export function parsePagination({
     }
     paginationMode = defaultPaginationMode;
   }
+  return paginationMode;
+}
+
+/**
+ * Parses pagination configuration from query parameters
+ * @param query - The query object to parse
+ * @param options - Optional configuration for pagination defaults and limits
+ * @returns Pagination configuration with page, limit, and offset
+ */
+export function parsePagination({
+  query,
+  options = {},
+}: {
+  query: Record<string, string>;
+  options?: ParsePaginationOptions;
+}): Pagination {
+  const paginationMode = determinePaginationMode({ query, options }) as
+    | "offset"
+    | "cursor";
 
   if (paginationMode === "offset") {
     return parseOffsetPagination({
