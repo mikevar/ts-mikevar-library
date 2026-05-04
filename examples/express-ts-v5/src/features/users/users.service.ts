@@ -1,9 +1,5 @@
 import { eq, count } from "drizzle-orm";
 import { dgRun } from "@mikevar/drizzle-data-grid";
-import type {
-  UsersForDataGridOrderByKey,
-  UsersForSelectorOrderByKey,
-} from "./users.types";
 import { db } from "../../db";
 import * as schema from "../../schema";
 
