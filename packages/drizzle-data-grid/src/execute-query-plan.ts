@@ -32,18 +32,22 @@ export async function executeQueryPlan({
     itemsQuery = itemsQuery.offset(queryPlan.offset);
   }
 
-  const [itemsResult, countResult] = await Promise.all([
-    itemsQuery,
-    countQuery,
-  ]);
+  try {
+    const [itemsResult, countResult] = await Promise.all([
+      itemsQuery,
+      countQuery,
+    ]);
 
-  const items = itemsResult;
-  const count = Array.isArray(countResult)
-    ? (countResult[0]?.count ?? 0)
-    : countResult;
+    const items = itemsResult;
+    const count = Array.isArray(countResult)
+      ? (countResult[0]?.count ?? 0)
+      : countResult;
 
-  return {
-    items,
-    count,
-  };
+    return {
+      items,
+      count,
+    };
+  } catch (error) {
+    throw error;
+  }
 }
