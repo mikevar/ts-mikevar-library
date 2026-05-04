@@ -189,5 +189,54 @@ http://localhost:3000/users/for-data-grid?page=1&limit=5&paginationMode=offset&f
 or:
 
 ```
+http://localhost:3000/users/for-data-grid?page=1&limit=5&paginationMode=offset&filterMode=search&search=something
+```
+
+or even:
+
+```
 http://localhost:3000/users/for-data-grid?cursor=1&limit=5&paginationMode=cursor&filterMode=filter&roleName__iLike=something&orders=id:asc
+```
+
+even more "magical":
+
+```
+http://localhost:3000/users/for-data-grid?p=1&l=5&pm=offset&fm=filter&roleName__iLike=something&o=email:asc,roleId:desc
+```
+
+by defining it as:
+
+```typescript
+const result = await dgRun({
+  query: query,
+  queryKeys: {
+    filterMode: "fm",
+    search: "s",
+    paginationMode: "pm",
+    page: "p",
+    limit: "l",
+    cursor: "c",
+    orders: "o",
+  },
+  fieldsSchema: {...},
+  queryBuilders: {
+    items: db
+      .select({
+        id: schema.users.id,
+        name: schema.users.name,
+        email: schema.users.email,
+        roleId: schema.users.roleId,
+        role: {
+          id: schema.roles.id,
+          name: schema.roles.name,
+        },
+      })
+      .from(schema.users)
+      .leftJoin(schema.roles, eq(schema.users.roleId, schema.roles.id)),
+    count: db
+      .select({ count: count() })
+      .from(schema.users)
+      .leftJoin(schema.roles, eq(schema.users.roleId, schema.roles.id)),
+  },
+});
 ```
