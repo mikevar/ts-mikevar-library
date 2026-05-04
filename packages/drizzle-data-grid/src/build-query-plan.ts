@@ -111,7 +111,12 @@ export function buildQueryPlan({
         filterOperators[filter.operator](field.column, parsedValues as any),
       );
     }
-    whereClause = wheres.length > 0 ? wheres[0] : and(...wheres);
+    whereClause =
+      wheres.length === 0
+        ? undefined
+        : wheres.length === 1
+          ? wheres[0]
+          : and(...wheres);
   }
 
   const limit: number = pagination.limit;
@@ -132,12 +137,17 @@ export function buildQueryPlan({
     }
 
     const cursorColumn = fieldsSchema[cursorOrder.column]!.column;
+    const cursorType = fieldsSchema[cursorOrder.column]!.type;
+    const cursorValue = parseValue({
+      type: cursorType,
+      values: [pagination.cursor],
+    })[0];
     const cursorFilterDirection = cursorOrder.direction;
     let additionalWhereClause: any = null;
     if (cursorFilterDirection === "asc") {
-      additionalWhereClause = gt(cursorColumn, pagination.cursor);
+      additionalWhereClause = gt(cursorColumn, cursorValue);
     } else {
-      additionalWhereClause = lt(cursorColumn, pagination.cursor);
+      additionalWhereClause = lt(cursorColumn, cursorValue);
     }
 
     whereClause = whereClause
