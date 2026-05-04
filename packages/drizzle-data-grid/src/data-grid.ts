@@ -12,6 +12,15 @@ import { formatResult } from "./format-result.ts";
 
 interface DataGridParams {
   query: Record<string, string>;
+  queryKeys?: {
+    filterMode?: string | undefined;
+    search?: string | undefined;
+    paginationMode?: string | undefined;
+    page?: string | undefined;
+    limit?: string | undefined;
+    cursor?: string | undefined;
+    orders?: string | undefined;
+  };
   fieldsSchema: FieldSchema;
   queryBuilders: {
     items: any;
@@ -26,6 +35,7 @@ export async function dgRun(params: DataGridParams) {
 
 export class DataGrid {
   private query;
+  private queryKeys;
   private fieldsSchema;
   private queryBuilders;
 
@@ -35,14 +45,23 @@ export class DataGrid {
   public plan?: QueryPlanObject;
   public result?: { items: any[]; count: number };
 
-  constructor({ query, fieldsSchema, queryBuilders }: DataGridParams) {
+  constructor({
+    query,
+    queryKeys,
+    fieldsSchema,
+    queryBuilders,
+  }: DataGridParams) {
     this.query = query;
+    this.queryKeys = queryKeys;
     this.fieldsSchema = fieldsSchema;
     this.queryBuilders = queryBuilders;
   }
 
   async run() {
-    this.parsed = parseQueryObject({ query: this.query });
+    this.parsed = parseQueryObject({
+      query: this.query,
+      queryKeys: this.queryKeys,
+    });
 
     this.normalized = normalizeParsedQueryObject({
       parsedQuery: this.parsed,
