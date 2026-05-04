@@ -1,4 +1,4 @@
-import type { FieldColumn, FilterOperator, FilterValueType } from "./types.ts";
+import type { FieldSchemaColumn, FilterOperator } from "./types.ts";
 import {
   and,
   or,
@@ -18,7 +18,7 @@ import {
 
 export const filterOperators: Record<
   FilterOperator,
-  (col: FieldColumn, values: FilterValueType[]) => SQL
+  (col: FieldSchemaColumn, values: (string | number | boolean | Date)[]) => SQL
 > = {
   eq: (col, [val]) => eq(col, val),
 

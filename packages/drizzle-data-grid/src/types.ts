@@ -1,71 +1,82 @@
-import type { SQL } from "drizzle-orm";
-import { DataGridFields } from "./data-grid-fields.ts";
-import { DataGridQuery } from "./data-grid-query.ts";
+import { FILTER_OPERATORS } from "./consts.ts";
 
-export type FieldColumn = any | unknown;
-export type FilterType = "string" | "number" | "boolean" | "date";
+export type ParsedQueryObject = {
+  pagination: {
+    mode?: string;
+    page?: string;
+    limit?: string;
+    cursor?: string;
+  };
+  sorting: {
+    orders?: string;
+  };
+  filtering: {
+    mode?: string;
+    search?: string;
+    filters: Record<string, string>;
+  };
+};
 
-export type Field = {
-  column: FieldColumn;
-  type: FilterType;
+export type PaginationMode = "offset" | "cursor";
+
+export type OffsetPaginationObject = {
+  mode: "offset";
+  page: number;
+  limit: number;
+};
+
+export type CursorPaginationObject = {
+  mode: "cursor";
+  cursor: string;
+  limit: number;
+};
+
+export type OrderDirection = "asc" | "desc";
+
+export type OrderObject = {
+  column: string;
+  direction: OrderDirection;
+};
+
+export type FilterMode = "search" | "filter";
+
+export type FilterOperator = (typeof FILTER_OPERATORS)[number];
+
+export type FilterObject = {
+  column: string;
+  operator: FilterOperator;
+  value: string;
+};
+
+export type NormalizedQueryObject = {
+  pagination: OffsetPaginationObject | CursorPaginationObject;
+  sorting: {
+    orders: OrderObject[];
+  };
+  filtering: {
+    mode: FilterMode;
+    search: string;
+    filters: FilterObject[];
+  };
+};
+
+export type FieldSchemaColumn = any | unknown;
+
+export type FieldSchemaObjectType = "string" | "number" | "boolean" | "date";
+
+export type FieldSchemaObject = {
+  column: FieldSchemaColumn;
+  type: FieldSchemaObjectType;
   sortable?: boolean;
-  filterable?: boolean;
   searchable?: boolean;
+  filterable?: boolean;
 };
-export type Fields<TKey extends string> = Record<TKey, Field>;
 
-export type SortableField = FieldColumn;
-export type SortableFields<TKey extends string> = Record<TKey, SortableField>;
+export type FieldSchema = Record<string, FieldSchemaObject>;
 
-export type SearchableField = {
-  column: FieldColumn;
-  type: FilterType;
+export type QueryPlanObject = {
+  where?: any;
+  orderBy?: any;
+  limit: number;
+  offset?: number;
 };
-export type SearchableFields<TKey extends string> = Record<
-  TKey,
-  SearchableField
->;
-
-export type FilterableField = {
-  column: FieldColumn;
-  type: FilterType;
-};
-export type FilterableFields<TKey extends string> = Record<
-  TKey,
-  FilterableField
->;
-
-export type FilterValueType = string | number | boolean | Date | undefined;
-export type FilterOperator =
-  | "eq"
-  | "iLike"
-  | "gt"
-  | "gte"
-  | "lt"
-  | "lte"
-  | "between"
-  | "isNull"
-  | "inArray";
-
-export interface DataGridQueryBuilderArgs<TOrderColumnKey extends string> {
-  query: DataGridQuery<TOrderColumnKey>;
-  fields: DataGridFields<TOrderColumnKey>;
-  filters: SQL | undefined;
-}
-
-export type QueryResult<T> = Promise<T>;
-
-export interface DataGridQueryBuilders<
-  TOrderColumnKey extends string,
-  TItem = any,
-> {
-  items:
-    | unknown
-    | ((args: DataGridQueryBuilderArgs<TOrderColumnKey>) => Promise<TItem[]>);
-
-  total:
-    | unknown
-    | ((
-        args: DataGridQueryBuilderArgs<TOrderColumnKey>,
-      ) => Promise<{ count: number } | { count: number }[]>);
-}
