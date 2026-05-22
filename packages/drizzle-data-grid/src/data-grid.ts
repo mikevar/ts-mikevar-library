@@ -3,6 +3,8 @@ import type {
   ParsedQueryObject,
   NormalizedQueryObject,
   QueryPlanObject,
+  QueryKeysOptions,
+  DefaultQueryValuesOptions,
 } from "./types.ts";
 import { parseQueryObject } from "./parse-query-object.ts";
 import { normalizeParsedQueryObject } from "./normalize-parsed-query-object.ts";
@@ -12,20 +14,13 @@ import { formatResult } from "./format-result.ts";
 
 interface DataGridParams {
   query: Record<string, string>;
-  queryKeys?: {
-    filterMode?: string | undefined;
-    search?: string | undefined;
-    paginationMode?: string | undefined;
-    page?: string | undefined;
-    limit?: string | undefined;
-    cursor?: string | undefined;
-    orders?: string | undefined;
-  };
+  queryKeys?: QueryKeysOptions;
   fieldsSchema: FieldSchema;
   queryBuilders: {
     items: any;
     count: any;
   };
+  defaultQueryValues?: DefaultQueryValuesOptions;
 }
 
 export async function dgRun(params: DataGridParams) {
@@ -38,6 +33,7 @@ export class DataGrid {
   private queryKeys;
   private fieldsSchema;
   private queryBuilders;
+  private defaultQueryValues;
 
   // optional debug state
   public parsed?: ParsedQueryObject;
@@ -50,11 +46,13 @@ export class DataGrid {
     queryKeys,
     fieldsSchema,
     queryBuilders,
+    defaultQueryValues,
   }: DataGridParams) {
     this.query = query;
     this.queryKeys = queryKeys;
     this.fieldsSchema = fieldsSchema;
     this.queryBuilders = queryBuilders;
+    this.defaultQueryValues = defaultQueryValues;
   }
 
   async run() {
@@ -65,6 +63,7 @@ export class DataGrid {
 
     this.normalized = normalizeParsedQueryObject({
       parsedQuery: this.parsed,
+      defaultQueryValues: this.defaultQueryValues,
     });
 
     this.plan = buildQueryPlan({

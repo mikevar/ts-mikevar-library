@@ -1,18 +1,8 @@
-import type { ParsedQueryObject } from "./types.ts";
+import type { ParsedQueryObject, QueryKeysOptions } from "./types.ts";
 
 interface ParseQueryObjectParams {
   query: Record<string, string>;
-  queryKeys?:
-    | {
-        filterMode?: string | undefined;
-        search?: string | undefined;
-        paginationMode?: string | undefined;
-        page?: string | undefined;
-        limit?: string | undefined;
-        cursor?: string | undefined;
-        orders?: string | undefined;
-      }
-    | undefined;
+  queryKeys?: QueryKeysOptions | undefined;
 }
 
 export function parseQueryObject({

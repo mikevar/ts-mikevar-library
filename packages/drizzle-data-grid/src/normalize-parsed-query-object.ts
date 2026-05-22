@@ -5,6 +5,7 @@ import type {
   ParsedQueryObject,
   CursorPaginationObject,
   OffsetPaginationObject,
+  DefaultQueryValuesOptions,
 } from "./types.ts";
 import {
   isPaginationMode,
@@ -24,19 +25,61 @@ import {
   DEFAULT_SEARCH,
 } from "./consts.ts";
 
+function mergeDefaultQueryValues(defaultQueryValues?: DefaultQueryValuesOptions) {
+  if (defaultQueryValues === undefined) {
+    return {
+      pagination: {
+        mode: DEFAULT_PAGINATION_MODE,
+        page: DEFAULT_PAGE,
+        limit: DEFAULT_LIMIT,
+        cursor: DEFAULT_CURSOR,
+      },
+      sorting: {
+        orders: [],
+      },
+      filtering: {
+        mode: DEFAULT_FILTER_MODE,
+        search: DEFAULT_SEARCH,
+        filters: [],
+      },
+    };
+  }
+
+  return {
+    pagination: {
+      mode: defaultQueryValues.paginationMode ?? DEFAULT_PAGINATION_MODE,
+      page: defaultQueryValues.page ?? DEFAULT_PAGE,
+      limit: defaultQueryValues.limit ?? DEFAULT_LIMIT,
+      cursor: defaultQueryValues.cursor ?? DEFAULT_CURSOR,
+    },
+    sorting: {
+      orders: defaultQueryValues.orders ?? [],
+    },
+    filtering: {
+      mode: defaultQueryValues.filterMode ?? DEFAULT_FILTER_MODE,
+      search: defaultQueryValues.search ?? DEFAULT_SEARCH,
+      filters: defaultQueryValues.filters ?? [],
+    },
+  };
+}
+
 interface NormalizeParsedQueryObjectParams {
   parsedQuery: ParsedQueryObject;
+  defaultQueryValues?: DefaultQueryValuesOptions | undefined;
 }
 
 export function normalizeParsedQueryObject({
   parsedQuery,
+  defaultQueryValues,
 }: NormalizeParsedQueryObjectParams): NormalizedQueryObject {
+  const defaultValues = mergeDefaultQueryValues(defaultQueryValues);
+
   const paginationMode = isPaginationMode(parsedQuery.pagination.mode)
     ? parsedQuery.pagination.mode
-    : DEFAULT_PAGINATION_MODE;
-  const page = toPositiveInt(parsedQuery.pagination.page, DEFAULT_PAGE);
-  const limit = toPositiveInt(parsedQuery.pagination.limit, DEFAULT_LIMIT);
-  const cursor = parsedQuery.pagination.cursor ?? DEFAULT_CURSOR;
+    : defaultValues.pagination.mode;
+  const page = toPositiveInt(parsedQuery.pagination.page, defaultValues.pagination.page);
+  const limit = toPositiveInt(parsedQuery.pagination.limit, defaultValues.pagination.limit);
+  const cursor = parsedQuery.pagination.cursor ?? defaultValues.pagination.cursor;
 
   const pagination =
     paginationMode === "offset"
@@ -91,8 +134,8 @@ export function normalizeParsedQueryObject({
     filtering: {
       mode: isFilterMode(parsedQuery.filtering.mode)
         ? parsedQuery.filtering.mode
-        : DEFAULT_FILTER_MODE,
-      search: parsedQuery.filtering.search ?? DEFAULT_SEARCH,
+        : defaultValues.filtering.mode,
+      search: parsedQuery.filtering.search ?? defaultValues.filtering.search,
       filters: filters,
     },
   };
