@@ -5,7 +5,6 @@ import type {
   ParsedQueryObject,
   CursorPaginationObject,
   OffsetPaginationObject,
-  FieldSchemaObjectType,
 } from "./types.ts";
 import {
   isPaginationMode,

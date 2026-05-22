@@ -1,4 +1,4 @@
-import { type ParsedQueryObject } from "./types.ts";
+import type { ParsedQueryObject } from "./types.ts";
 
 interface ParseQueryObjectParams {
   query: Record<string, string>;
