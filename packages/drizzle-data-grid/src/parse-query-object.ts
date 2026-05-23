@@ -1,4 +1,38 @@
 import type { ParsedQueryObject, QueryKeysOptions } from "./types.ts";
+import {
+  DEFAULT_FILTER_MODE_KEY,
+  DEFAULT_SEARCH_KEY,
+  DEFAULT_PAGINATION_MODE_KEY,
+  DEFAULT_PAGE_KEY,
+  DEFAULT_LIMIT_KEY,
+  DEFAULT_CURSOR_KEY,
+  DEFAULT_ORDERS_KEY,
+} from "./consts.ts";
+
+function mergeDefaultAndCustomQueryKeys(
+  customQueryKeys: QueryKeysOptions | undefined,
+) {
+  const DEFAULT_QUERY_KEYS = {
+    filterMode: DEFAULT_FILTER_MODE_KEY,
+    search: DEFAULT_SEARCH_KEY,
+    paginationMode: DEFAULT_PAGINATION_MODE_KEY,
+    page: DEFAULT_PAGE_KEY,
+    limit: DEFAULT_LIMIT_KEY,
+    cursor: DEFAULT_CURSOR_KEY,
+    orders: DEFAULT_ORDERS_KEY,
+  };
+
+  return {
+    filterMode: customQueryKeys?.filterMode ?? DEFAULT_QUERY_KEYS.filterMode,
+    search: customQueryKeys?.search ?? DEFAULT_QUERY_KEYS.search,
+    paginationMode:
+      customQueryKeys?.paginationMode ?? DEFAULT_QUERY_KEYS.paginationMode,
+    page: customQueryKeys?.page ?? DEFAULT_QUERY_KEYS.page,
+    limit: customQueryKeys?.limit ?? DEFAULT_QUERY_KEYS.limit,
+    cursor: customQueryKeys?.cursor ?? DEFAULT_QUERY_KEYS.cursor,
+    orders: customQueryKeys?.orders ?? DEFAULT_QUERY_KEYS.orders,
+  };
+}
 
 interface ParseQueryObjectParams {
   query: Record<string, string>;
@@ -9,26 +43,7 @@ export function parseQueryObject({
   query,
   queryKeys,
 }: ParseQueryObjectParams): ParsedQueryObject {
-  const DEFAULT_QUERY_KEYS = {
-    filterMode: "filterMode",
-    search: "search",
-    paginationMode: "paginationMode",
-    page: "page",
-    limit: "limit",
-    cursor: "cursor",
-    orders: "orders",
-  };
-
-  const keys = {
-    filterMode: queryKeys?.filterMode ?? DEFAULT_QUERY_KEYS.filterMode,
-    search: queryKeys?.search ?? DEFAULT_QUERY_KEYS.search,
-    paginationMode:
-      queryKeys?.paginationMode ?? DEFAULT_QUERY_KEYS.paginationMode,
-    page: queryKeys?.page ?? DEFAULT_QUERY_KEYS.page,
-    limit: queryKeys?.limit ?? DEFAULT_QUERY_KEYS.limit,
-    cursor: queryKeys?.cursor ?? DEFAULT_QUERY_KEYS.cursor,
-    orders: queryKeys?.orders ?? DEFAULT_QUERY_KEYS.orders,
-  };
+  const keys = mergeDefaultAndCustomQueryKeys(queryKeys);
 
   const reserved = new Set(Object.values(keys));
 
