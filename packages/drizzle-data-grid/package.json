@@ -1,6 +1,7 @@
 {
   "name": "@mikevar/drizzle-data-grid",
   "version": "0.0.1",
+  "private": false,
   "type": "module",
   "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
