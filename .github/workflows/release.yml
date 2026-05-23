@@ -28,6 +28,10 @@ jobs:
 
       - run: pnpm build
 
+      - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - uses: changesets/action@v1
         with:
           publish: pnpm changeset publish
