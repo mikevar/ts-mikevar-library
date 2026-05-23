@@ -25,7 +25,9 @@ import {
   DEFAULT_SEARCH,
 } from "./consts.ts";
 
-function mergeDefaultQueryValues(defaultQueryValues?: DefaultQueryValuesOptions) {
+function mergeDefaultQueryValues(
+  defaultQueryValues?: DefaultQueryValuesOptions,
+) {
   if (defaultQueryValues === undefined) {
     return {
       pagination: {
@@ -77,9 +79,16 @@ export function normalizeParsedQueryObject({
   const paginationMode = isPaginationMode(parsedQuery.pagination.mode)
     ? parsedQuery.pagination.mode
     : defaultValues.pagination.mode;
-  const page = toPositiveInt(parsedQuery.pagination.page, defaultValues.pagination.page);
-  const limit = toPositiveInt(parsedQuery.pagination.limit, defaultValues.pagination.limit);
-  const cursor = parsedQuery.pagination.cursor ?? defaultValues.pagination.cursor;
+  const page = toPositiveInt(
+    parsedQuery.pagination.page,
+    defaultValues.pagination.page,
+  );
+  const limit = toPositiveInt(
+    parsedQuery.pagination.limit,
+    defaultValues.pagination.limit,
+  );
+  const cursor =
+    parsedQuery.pagination.cursor ?? defaultValues.pagination.cursor;
 
   const pagination =
     paginationMode === "offset"
