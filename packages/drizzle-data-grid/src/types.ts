@@ -1,13 +1,13 @@
 import { FILTER_OPERATORS } from "./consts.ts";
 
 export type QueryKeysOptions = {
-  filterMode: string;
-  search: string;
-  paginationMode: string;
-  page: string;
-  limit: string;
-  cursor: string;
-  orders: string;
+  filterMode?: string;
+  search?: string;
+  paginationMode?: string;
+  page?: string;
+  limit?: string;
+  cursor?: string;
+  orders?: string;
 };
 
 export type DefaultQueryValuesOptions = {
