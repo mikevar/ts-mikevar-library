@@ -1,4 +1,4 @@
-import type { NormalizedQueryObject } from "./types.ts";
+import type { NormalizedQueryObject } from "@mikevar/data-grid-contracts";
 
 export function buildOffsetMeta({
   page,
