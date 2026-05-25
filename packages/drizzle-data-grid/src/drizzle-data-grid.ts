@@ -22,7 +22,7 @@ interface DrizzleDataGridParams {
   defaultQueryValues?: DefaultQueryValuesOptions;
 }
 
-export async function dgRun(params: DrizzleDataGridParams) {
+export async function ddgRun(params: DrizzleDataGridParams) {
   const dataGrid = new DrizzleDataGrid(params);
   return await dataGrid.run();
 }
