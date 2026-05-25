@@ -116,3 +116,5 @@ const syncFilterState = () => {
 This is something small, trivial, but yet it's painful enough to trigger more cost in AI tokens and it's easy to make mistake.
 
 To avoid this, I created this package!
+
+## More will come! Stay tuned
