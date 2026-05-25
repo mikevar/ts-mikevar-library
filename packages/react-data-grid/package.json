@@ -42,5 +42,9 @@
   },
   "dependencies": {
     "nuqs": "^2.8.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikevar/ts-mikevar-library.git"
   }
 }
