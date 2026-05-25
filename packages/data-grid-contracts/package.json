@@ -1,5 +1,5 @@
 {
-  "name": "@mikevar/data-grid-types",
+  "name": "@mikevar/data-grid-contracts",
   "version": "0.0.1",
   "private": false,
   "publishConfig": {
