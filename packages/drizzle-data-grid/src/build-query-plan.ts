@@ -1,11 +1,11 @@
-import { or, and, gt, lt, asc, desc } from "drizzle-orm";
 import type {
   FieldSchema,
   NormalizedQueryObject,
   FieldSchemaObject,
   FieldSchemaObjectType,
   QueryPlanObject,
-} from "./types.ts";
+} from "@mikevar/data-grid-contracts";
+import { or, and, gt, lt, asc, desc } from "drizzle-orm";
 import { filterOperators } from "./filter-operators.ts";
 
 function buildFieldMaps(fieldsSchema: FieldSchema) {

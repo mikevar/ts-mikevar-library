@@ -5,7 +5,7 @@ import type {
   QueryPlanObject,
   QueryKeysOptions,
   DefaultQueryValuesOptions,
-} from "./types.ts";
+} from "@mikevar/data-grid-contracts";
 import { parseQueryObject } from "./parse-query-object.ts";
 import { normalizeParsedQueryObject } from "./normalize-parsed-query-object.ts";
 import { buildQueryPlan } from "./build-query-plan.ts";

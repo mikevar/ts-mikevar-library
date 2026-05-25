@@ -1,4 +1,7 @@
-import type { FieldSchemaColumn, FilterOperator } from "./types.ts";
+import type {
+  FieldSchemaColumn,
+  FilterOperator,
+} from "@mikevar/data-grid-contracts";
 import {
   and,
   or,
