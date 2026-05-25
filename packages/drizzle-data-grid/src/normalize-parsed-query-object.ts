@@ -6,14 +6,7 @@ import type {
   CursorPaginationObject,
   OffsetPaginationObject,
   DefaultQueryValuesOptions,
-} from "./types.ts";
-import {
-  isPaginationMode,
-  isOrderDirection,
-  isFilterMode,
-  toPositiveInt,
-  isFilterOperator,
-} from "./helpers.ts";
+} from "@mikevar/data-grid-contracts";
 import {
   COL_DIRECTION_SEPARATOR,
   COL_OPERATOR_SEPARATOR,
@@ -23,7 +16,14 @@ import {
   DEFAULT_PAGE,
   DEFAULT_PAGINATION_MODE,
   DEFAULT_SEARCH,
-} from "./consts.ts";
+} from "@mikevar/data-grid-contracts";
+import {
+  isPaginationMode,
+  isOrderDirection,
+  isFilterMode,
+  toPositiveInt,
+  isFilterOperator,
+} from "./helpers.ts";
 
 function mergeDefaultQueryValues(
   defaultQueryValues?: DefaultQueryValuesOptions,

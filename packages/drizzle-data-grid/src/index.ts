@@ -1,2 +1,2 @@
 export { dgRun, DataGrid } from "./data-grid.ts";
-export * from "./types.ts";
+export * from "@mikevar/data-grid-contracts";

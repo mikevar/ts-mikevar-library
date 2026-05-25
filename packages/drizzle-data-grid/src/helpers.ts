@@ -3,8 +3,8 @@ import {
   FilterOperator,
   OrderDirection,
   PaginationMode,
-} from "./types.ts";
-import { FILTER_OPERATORS } from "./consts.ts";
+  FILTER_OPERATORS,
+} from "@mikevar/data-grid-contracts";
 
 export function isPaginationMode(v: unknown): v is PaginationMode {
   return v === "offset" || v === "cursor";

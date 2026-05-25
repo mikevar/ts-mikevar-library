@@ -1,4 +1,7 @@
-import type { ParsedQueryObject, QueryKeysOptions } from "./types.ts";
+import type {
+  ParsedQueryObject,
+  QueryKeysOptions,
+} from "@mikevar/data-grid-contracts";
 import {
   DEFAULT_FILTER_MODE_KEY,
   DEFAULT_SEARCH_KEY,
@@ -7,7 +10,7 @@ import {
   DEFAULT_LIMIT_KEY,
   DEFAULT_CURSOR_KEY,
   DEFAULT_ORDERS_KEY,
-} from "./consts.ts";
+} from "@mikevar/data-grid-contracts";
 
 function mergeDefaultAndCustomQueryKeys(
   customQueryKeys: QueryKeysOptions | undefined,
