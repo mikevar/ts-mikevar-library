@@ -6,8 +6,7 @@ import type {
   QueryKeysOptions,
   DefaultQueryValuesOptions,
 } from "@mikevar/data-grid-contracts";
-import { parseQueryObject } from "./parse-query-object.ts";
-import { normalizeParsedQueryObject } from "./normalize-parsed-query-object.ts";
+import { parseAndNormalize } from "@mikevar/data-grid";
 import { buildQueryPlan } from "./build-query-plan.ts";
 import { executeQueryPlan } from "./execute-query-plan.ts";
 import { formatResult } from "./format-result.ts";
@@ -56,15 +55,14 @@ export class DataGrid {
   }
 
   async run() {
-    this.parsed = parseQueryObject({
+    const { parsed, normalized } = parseAndNormalize({
       query: this.query,
       queryKeys: this.queryKeys,
-    });
-
-    this.normalized = normalizeParsedQueryObject({
-      parsedQuery: this.parsed,
       defaultQueryValues: this.defaultQueryValues,
     });
+
+    this.parsed = parsed;
+    this.normalized = normalized;
 
     this.plan = buildQueryPlan({
       normalizedQuery: this.normalized,
