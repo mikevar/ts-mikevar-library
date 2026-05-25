@@ -1,5 +1,11 @@
 # @mikevar/drizzle-data-grid
 
+## 0.1.3
+
+### Patch Changes
+
+- eae0c2f: Test trigger new version for workflow because it's acting up
+
 ## 0.1.2
 
 ### Patch Changes
