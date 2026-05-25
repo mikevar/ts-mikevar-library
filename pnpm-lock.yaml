@@ -97,6 +97,9 @@ importers:
 
   packages/drizzle-data-grid:
     dependencies:
+      '@mikevar/data-grid':
+        specifier: workspace:*
+        version: link:../data-grid
       '@mikevar/data-grid-contracts':
         specifier: ^0.1.0
         version: 0.1.0
