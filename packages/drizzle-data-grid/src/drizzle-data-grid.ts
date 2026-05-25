@@ -11,7 +11,7 @@ import { buildQueryPlan } from "./build-query-plan.ts";
 import { executeQueryPlan } from "./execute-query-plan.ts";
 import { formatResult } from "./format-result.ts";
 
-interface DataGridParams {
+interface DrizzleDataGridParams {
   query: Record<string, string>;
   queryKeys?: QueryKeysOptions;
   fieldsSchema: FieldSchema;
@@ -22,12 +22,12 @@ interface DataGridParams {
   defaultQueryValues?: DefaultQueryValuesOptions;
 }
 
-export async function dgRun(params: DataGridParams) {
-  const dataGrid = new DataGrid(params);
+export async function dgRun(params: DrizzleDataGridParams) {
+  const dataGrid = new DrizzleDataGrid(params);
   return await dataGrid.run();
 }
 
-export class DataGrid {
+export class DrizzleDataGrid {
   private query;
   private queryKeys;
   private fieldsSchema;
@@ -46,7 +46,7 @@ export class DataGrid {
     fieldsSchema,
     queryBuilders,
     defaultQueryValues,
-  }: DataGridParams) {
+  }: DrizzleDataGridParams) {
     this.query = query;
     this.queryKeys = queryKeys;
     this.fieldsSchema = fieldsSchema;
