@@ -6,17 +6,8 @@ import type {
   CursorPaginationObject,
   OffsetPaginationObject,
   DefaultQueryValuesOptions,
-} from "@mikevar/data-grid-contracts";
-import {
-  COL_DIRECTION_SEPARATOR,
-  COL_OPERATOR_SEPARATOR,
-  DEFAULT_CURSOR,
-  DEFAULT_FILTER_MODE,
-  DEFAULT_LIMIT,
-  DEFAULT_PAGE,
-  DEFAULT_PAGINATION_MODE,
-  DEFAULT_SEARCH,
-} from "@mikevar/data-grid-contracts";
+} from "./types.ts";
+import { COL_DIRECTION_SEPARATOR, COL_OPERATOR_SEPARATOR } from "./consts.ts";
 import {
   isPaginationMode,
   isOrderDirection,
@@ -24,46 +15,10 @@ import {
   toPositiveInt,
   isFilterOperator,
 } from "./helpers.ts";
-
-function mergeDefaultQueryValues(
-  defaultQueryValues?: DefaultQueryValuesOptions,
-) {
-  if (defaultQueryValues === undefined) {
-    return {
-      pagination: {
-        mode: DEFAULT_PAGINATION_MODE,
-        page: DEFAULT_PAGE,
-        limit: DEFAULT_LIMIT,
-        cursor: DEFAULT_CURSOR,
-      },
-      sorting: {
-        orders: [],
-      },
-      filtering: {
-        mode: DEFAULT_FILTER_MODE,
-        search: DEFAULT_SEARCH,
-        filters: [],
-      },
-    };
-  }
-
-  return {
-    pagination: {
-      mode: defaultQueryValues.paginationMode ?? DEFAULT_PAGINATION_MODE,
-      page: defaultQueryValues.page ?? DEFAULT_PAGE,
-      limit: defaultQueryValues.limit ?? DEFAULT_LIMIT,
-      cursor: defaultQueryValues.cursor ?? DEFAULT_CURSOR,
-    },
-    sorting: {
-      orders: defaultQueryValues.orders ?? [],
-    },
-    filtering: {
-      mode: defaultQueryValues.filterMode ?? DEFAULT_FILTER_MODE,
-      search: defaultQueryValues.search ?? DEFAULT_SEARCH,
-      filters: defaultQueryValues.filters ?? [],
-    },
-  };
-}
+import {
+  mergeDefaultAndCustomQueryKeys,
+  mergeDefaultQueryValues,
+} from "./utils.ts";
 
 interface NormalizeParsedQueryObjectParams {
   parsedQuery: ParsedQueryObject;

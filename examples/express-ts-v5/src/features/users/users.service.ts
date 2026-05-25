@@ -1,5 +1,5 @@
 import { eq, count } from "drizzle-orm";
-import { dgRun } from "@mikevar/drizzle-data-grid";
+import { ddgRun } from "@mikevar/drizzle-data-grid";
 import { db } from "../../db";
 import * as schema from "../../schema";
 
@@ -8,7 +8,7 @@ export async function getUsersForSelector({
 }: {
   query: Record<string, string>;
 }) {
-  const result = await dgRun({
+  const result = await ddgRun({
     query: {
       paginationMode: "cursor",
       cursor: query.cursor!,
@@ -50,7 +50,7 @@ export async function getUsersForDataGrid({
 }: {
   query: Record<string, string>;
 }) {
-  const result = await dgRun({
+  const result = await ddgRun({
     query: query,
     fieldsSchema: {
       id: {

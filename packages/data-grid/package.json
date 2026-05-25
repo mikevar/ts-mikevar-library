@@ -1,6 +1,6 @@
 {
-  "name": "@mikevar/drizzle-data-grid",
-  "version": "0.1.3",
+  "name": "@mikevar/data-grid",
+  "version": "0.0.1",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -21,10 +21,6 @@
     "test": "vitest src",
     "build": "tsup src/index.ts --format esm,cjs --dts --clean",
     "dev": "tsup src/index.ts --format esm,cjs --dts --watch"
-  },
-  "peerDependencies": {
-    "drizzle-orm": "^0.45.2",
-    "@mikevar/data-grid": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.5.0",

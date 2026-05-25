@@ -1,18 +1,16 @@
 import type {
-  FieldSchema,
   ParsedQueryObject,
-  NormalizedQueryObject,
-  QueryPlanObject,
   QueryKeysOptions,
+  NormalizedQueryObject,
   DefaultQueryValuesOptions,
-} from "@mikevar/data-grid-contracts";
-import { parseQueryObject } from "./parse-query-object.ts";
-import { normalizeParsedQueryObject } from "./normalize-parsed-query-object.ts";
+} from "@mikevar/data-grid";
+import { parseAndNormalize } from "@mikevar/data-grid";
+import type { FieldSchema, QueryPlanObject } from "./types.ts";
 import { buildQueryPlan } from "./build-query-plan.ts";
 import { executeQueryPlan } from "./execute-query-plan.ts";
 import { formatResult } from "./format-result.ts";
 
-interface DataGridParams {
+interface DrizzleDataGridParams {
   query: Record<string, string>;
   queryKeys?: QueryKeysOptions;
   fieldsSchema: FieldSchema;
@@ -23,12 +21,12 @@ interface DataGridParams {
   defaultQueryValues?: DefaultQueryValuesOptions;
 }
 
-export async function dgRun(params: DataGridParams) {
-  const dataGrid = new DataGrid(params);
+export async function ddgRun(params: DrizzleDataGridParams) {
+  const dataGrid = new DrizzleDataGrid(params);
   return await dataGrid.run();
 }
 
-export class DataGrid {
+export class DrizzleDataGrid {
   private query;
   private queryKeys;
   private fieldsSchema;
@@ -47,7 +45,7 @@ export class DataGrid {
     fieldsSchema,
     queryBuilders,
     defaultQueryValues,
-  }: DataGridParams) {
+  }: DrizzleDataGridParams) {
     this.query = query;
     this.queryKeys = queryKeys;
     this.fieldsSchema = fieldsSchema;
@@ -56,15 +54,14 @@ export class DataGrid {
   }
 
   async run() {
-    this.parsed = parseQueryObject({
+    const { parsed, normalized } = parseAndNormalize({
       query: this.query,
       queryKeys: this.queryKeys,
-    });
-
-    this.normalized = normalizeParsedQueryObject({
-      parsedQuery: this.parsed,
       defaultQueryValues: this.defaultQueryValues,
     });
+
+    this.parsed = parsed;
+    this.normalized = normalized;
 
     this.plan = buildQueryPlan({
       normalizedQuery: this.normalized,

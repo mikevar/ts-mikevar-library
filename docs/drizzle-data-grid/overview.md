@@ -25,7 +25,7 @@ Imagine if you only need to do this:
 
 ```typescript
 import { eq, count } from "drizzle-orm";
-import { dgRun } from "@mikevar/drizzle-data-grid";
+import { ddgRun } from "@mikevar/drizzle-data-grid";
 import { db } from "./db";
 import * as schema from "./schema";
 
@@ -34,7 +34,7 @@ async function getUsersForDataGrid({
 }: {
   query: Record<string, string>;
 }) {
-  const result = await dgRun({
+  const result = await ddgRun({
     query: query,
     fieldsSchema: {
       id: {
@@ -207,7 +207,7 @@ http://localhost:3000/users/for-data-grid?p=1&l=5&pm=offset&fm=filter&roleName__
 by defining it as:
 
 ```typescript
-const result = await dgRun({
+const result = await ddgRun({
   query: query,
   queryKeys: {
     filterMode: "fm",

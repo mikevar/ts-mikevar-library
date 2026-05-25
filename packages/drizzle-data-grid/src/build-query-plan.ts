@@ -1,10 +1,10 @@
+import type { NormalizedQueryObject } from "@mikevar/data-grid";
 import type {
   FieldSchema,
-  NormalizedQueryObject,
   FieldSchemaObject,
   FieldSchemaObjectType,
   QueryPlanObject,
-} from "@mikevar/data-grid-contracts";
+} from "./types.ts";
 import { or, and, gt, lt, asc, desc } from "drizzle-orm";
 import { filterOperators } from "./filter-operators.ts";
 
