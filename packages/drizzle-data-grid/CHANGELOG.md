@@ -1,5 +1,11 @@
 # @mikevar/drizzle-data-grid
 
+## 0.1.2
+
+### Patch Changes
+
+- 9db7f67: Implement new shared contracts on `@mikevar/data-grid-contracts`
+
 ## 0.1.1
 
 ### Patch Changes
