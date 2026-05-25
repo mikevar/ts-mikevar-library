@@ -1,12 +1,11 @@
 import type {
-  FieldSchema,
   ParsedQueryObject,
-  NormalizedQueryObject,
-  QueryPlanObject,
   QueryKeysOptions,
+  NormalizedQueryObject,
   DefaultQueryValuesOptions,
-} from "@mikevar/data-grid-contracts";
+} from "@mikevar/data-grid";
 import { parseAndNormalize } from "@mikevar/data-grid";
+import type { FieldSchema, QueryPlanObject } from "./types.ts";
 import { buildQueryPlan } from "./build-query-plan.ts";
 import { executeQueryPlan } from "./execute-query-plan.ts";
 import { formatResult } from "./format-result.ts";

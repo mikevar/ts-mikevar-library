@@ -4,7 +4,7 @@ import {
   OrderDirection,
   PaginationMode,
   FILTER_OPERATORS,
-} from "@mikevar/data-grid-contracts";
+} from "@mikevar/data-grid";
 
 export function isPaginationMode(v: unknown): v is PaginationMode {
   return v === "offset" || v === "cursor";

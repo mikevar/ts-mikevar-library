@@ -1,4 +1,4 @@
-import type { QueryPlanObject } from "@mikevar/data-grid-contracts";
+import type { QueryPlanObject } from "./types.ts";
 
 interface ExecuteQueryPlanParams {
   queryPlan: QueryPlanObject;
