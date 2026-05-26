@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   COL_DIRECTION_SEPARATOR,
-  COL_OPERATOR_SEPARATOR,
   type FilterMode,
-  FilterOperator,
   type NormalizedQueryObject,
   parseAndNormalize,
 } from "@mikevar/data-grid";
@@ -154,34 +152,17 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
         return prev;
       }
 
-      const [column, operator] = queryKey.split(COL_OPERATOR_SEPARATOR) as [
-        string,
-        FilterOperator,
-      ];
-
-      if (!column || !operator) {
-        return prev;
-      }
-
-      const existingFilterObject = prev.filtering.filters.find((filter) => {
-        return filter.column === column && filter.operator === operator;
-      });
-
-      if (existingFilterObject?.value === value) {
-        return prev;
-      }
-
-      const newFilters = [...prev.filtering.filters];
+      const updatedRawFilters = {
+        ...prev.filtering.rawFilters,
+        [queryKey]: value,
+      };
 
       return {
         ...prev,
 
         filtering: {
           ...prev.filtering,
-          filters: {
-            ...prev.filtering.filters,
-            [queryKey]: value,
-          },
+          rawFilters: updatedRawFilters,
         },
       };
     });
@@ -222,17 +203,16 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
         .join(","),
     );
 
-    for (const filter of draftState.filtering.filters) {
-      nextParams.set(
-        `${filter.column}${COL_OPERATOR_SEPARATOR}${filter.operator}`,
-        filter.value,
-      );
+    for (const [key, value] of Object.entries(
+      draftState.filtering.rawFilters,
+    )) {
+      nextParams.set(key, value);
     }
 
     options.onUrlChange?.(nextParams.toString());
   }, [draftState, options, searchParams]);
 
-  const reset = useCallback(() => {
+  const resetToPersisted = useCallback(() => {
     setDraftState(persistedState);
   }, [persistedState]);
 
@@ -246,9 +226,10 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
       nextPage,
       previousPage,
       setSearch,
+      setFilter,
 
       submit,
-      reset,
+      resetToPersisted,
     },
   };
 }
