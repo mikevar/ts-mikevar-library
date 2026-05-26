@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   COL_DIRECTION_SEPARATOR,
+  COL_OPERATOR_SEPARATOR,
   type FilterMode,
+  FilterOperator,
   type NormalizedQueryObject,
   parseAndNormalize,
 } from "@mikevar/data-grid";
 
 interface UseDataGridStatesOptions {
   url: string;
+  filterQueryKeys?: string[];
   onUrlChange?: (url: string) => void;
 }
 
@@ -16,9 +19,29 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
     return new URLSearchParams(options.url);
   }, [options.url]);
 
+  const gridKeys = useMemo(() => {
+    return new Set([
+      "filterMode",
+      "search",
+      "paginationMode",
+      "page",
+      "limit",
+      "cursor",
+      "orders",
+
+      ...(options.filterQueryKeys ?? []),
+    ]);
+  }, [options.filterQueryKeys]);
+
+  const query = useMemo(() => {
+    return Object.fromEntries(
+      Array.from(searchParams.entries()).filter(([key]) => gridKeys.has(key)),
+    );
+  }, [searchParams, gridKeys]);
+
   const persistedState = useMemo<NormalizedQueryObject>(() => {
     const { normalized } = parseAndNormalize({
-      query: Object.fromEntries(searchParams.entries()),
+      query,
 
       queryKeys: {
         filterMode: "filterMode",
@@ -32,7 +55,7 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
     });
 
     return normalized;
-  }, [searchParams]);
+  }, [query]);
 
   const [draftState, setDraftState] =
     useState<NormalizedQueryObject>(persistedState);
@@ -53,14 +76,20 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
   }, []);
 
   const setPage = useCallback((page: number) => {
-    setDraftState((prev) => ({
-      ...prev,
+    setDraftState((prev) => {
+      if (prev.pagination.mode !== "offset") {
+        return prev;
+      }
 
-      pagination: {
-        ...prev.pagination,
-        page,
-      },
-    }));
+      return {
+        ...prev,
+
+        pagination: {
+          ...prev.pagination,
+          page,
+        },
+      };
+    });
   }, []);
 
   const nextPage = useCallback(() => {
@@ -98,23 +127,74 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
   }, []);
 
   const setSearch = useCallback((search: string) => {
-    setDraftState((prev) => ({
-      ...prev,
+    setDraftState((prev) => {
+      if (prev.filtering.mode !== "search") {
+        return prev;
+      }
 
-      filtering: {
-        ...prev.filtering,
-        search,
-      },
+      return {
+        ...prev,
 
-      pagination: {
-        ...prev.pagination,
-        page: 1,
-      },
-    }));
+        filtering: {
+          ...prev.filtering,
+          search,
+        },
+
+        pagination: {
+          ...prev.pagination,
+          page: 1,
+        },
+      };
+    });
+  }, []);
+
+  const setFilter = useCallback((queryKey: string, value: string) => {
+    setDraftState((prev) => {
+      if (prev.filtering.mode !== "filter") {
+        return prev;
+      }
+
+      const [column, operator] = queryKey.split(COL_OPERATOR_SEPARATOR) as [
+        string,
+        FilterOperator,
+      ];
+
+      if (!column || !operator) {
+        return prev;
+      }
+
+      const existingFilterObject = prev.filtering.filters.find((filter) => {
+        return filter.column === column && filter.operator === operator;
+      });
+
+      if (existingFilterObject?.value === value) {
+        return prev;
+      }
+
+      const newFilters = [...prev.filtering.filters];
+
+      return {
+        ...prev,
+
+        filtering: {
+          ...prev.filtering,
+          filters: {
+            ...prev.filtering.filters,
+            [queryKey]: value,
+          },
+        },
+      };
+    });
   }, []);
 
   const submit = useCallback(() => {
     const nextParams = new URLSearchParams();
+
+    for (const [key, value] of searchParams.entries()) {
+      if (!gridKeys.has(key)) {
+        nextParams.set(key, value);
+      }
+    }
 
     nextParams.set("filterMode", draftState.filtering.mode);
 
@@ -142,8 +222,15 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
         .join(","),
     );
 
+    for (const filter of draftState.filtering.filters) {
+      nextParams.set(
+        `${filter.column}${COL_OPERATOR_SEPARATOR}${filter.operator}`,
+        filter.value,
+      );
+    }
+
     options.onUrlChange?.(nextParams.toString());
-  }, [draftState, options]);
+  }, [draftState, options, searchParams]);
 
   const reset = useCallback(() => {
     setDraftState(persistedState);
