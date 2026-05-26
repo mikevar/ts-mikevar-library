@@ -4,7 +4,6 @@ import {
   DefaultQueryValuesOptions,
   type FilterMode,
   mergeDefaultAndCustomQueryKeys,
-  mergeDefaultQueryValues,
   type NormalizedQueryObject,
   parseAndNormalize,
   QueryKeysOptions,
