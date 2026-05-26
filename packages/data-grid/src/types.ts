@@ -77,6 +77,7 @@ export type NormalizedQueryObject = {
   filtering: {
     mode: FilterMode;
     search: string;
+    rawFilters: Record<string, string>;
     filters: FilterObject[];
   };
 };
