@@ -70,7 +70,9 @@ export function normalizeParsedQueryObject({
     })
     .filter((item): item is OrderObject => item !== null);
 
-  const filters = Object.entries(parsedQuery.filtering.filters)
+  const rawFilters = parsedQuery.filtering.filters;
+
+  const filters = Object.entries(rawFilters)
     .map(([colOperator, value]) => {
       const [col, operator] = colOperator.split(COL_OPERATOR_SEPARATOR);
 
@@ -97,6 +99,7 @@ export function normalizeParsedQueryObject({
         ? parsedQuery.filtering.mode
         : defaultValues.filtering.mode,
       search: parsedQuery.filtering.search ?? defaultValues.filtering.search,
+      rawFilters: rawFilters,
       filters: filters,
     },
   };
