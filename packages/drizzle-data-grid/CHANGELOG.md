@@ -4,16 +4,7 @@
 
 ### Patch Changes
 
-- e4e02e0: ## @mikevar/react-data-grid
-
-  - Add basic `useDataGridStates()` hook for headless data grid query state management.
-  - Support draft vs persisted state flow.
-  - Support dynamic filter query keys.
-  - Add submit/reset actions for URL synchronization.
-
-  ## @mikevar/drizzle-data-grid
-
-  - Update compatibility with latest `@mikevar/data-grid` normalization changes.
+- e4e02e0: Update compatibility with latest `@mikevar/data-grid` normalization changes.
 
 ## 0.2.1
 
