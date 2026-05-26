@@ -1,7 +1,6 @@
 {
   "name": "react-ts-v19",
   "private": true,
-  "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
