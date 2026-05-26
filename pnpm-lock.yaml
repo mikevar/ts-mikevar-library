@@ -104,6 +104,9 @@ importers:
 
   packages/react-data-grid:
     dependencies:
+      '@mikevar/data-grid':
+        specifier: ^0.1.1
+        version: 0.1.1
       nuqs:
         specifier: ^2.8.9
         version: 2.8.9(react@19.2.6)
