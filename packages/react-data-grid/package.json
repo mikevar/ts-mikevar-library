@@ -27,20 +27,20 @@
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "pnpm build"
   },
+  "dependencies": {
+    "@mikevar/data-grid": "^0.2.0",
+    "nuqs": "^2.8.9"
+  },
   "peerDependencies": {
     "react": "^18 || ^19"
   },
   "devDependencies": {
     "@types/react": "^19.1.8",
-    "react": "^19.1.0",
     "tsup": "^8.5.0",
     "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=18"
-  },
-  "dependencies": {
-    "nuqs": "^2.8.9"
   },
   "repository": {
     "type": "git",
