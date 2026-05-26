@@ -79,6 +79,9 @@ importers:
 
   examples/react-ts-v19:
     dependencies:
+      '@mikevar/react-data-grid':
+        specifier: workspace:*
+        version: link:../../packages/react-data-grid
       react:
         specifier: ^19.2.6
         version: 19.2.6
