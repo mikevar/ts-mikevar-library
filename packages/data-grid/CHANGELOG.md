@@ -1,5 +1,11 @@
 # @mikevar/data-grid
 
+## 0.2.0
+
+### Minor Changes
+
+- 417aba4: Preserve raw filters in the normalized shape
+
 ## 0.1.1
 
 ### Patch Changes
