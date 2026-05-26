@@ -1,5 +1,11 @@
 # @mikevar/drizzle-data-grid
 
+## 0.2.2
+
+### Patch Changes
+
+- e4e02e0: Update compatibility with latest `@mikevar/data-grid` normalization changes.
+
 ## 0.2.1
 
 ### Patch Changes
