@@ -4,9 +4,7 @@
 
 ### Patch Changes
 
-- b8f20b3: Patch new release to trigger tags and npm release successfully
-- Updated dependencies [b8f20b3]
-  - @mikevar/data-grid@0.1.1
+- ab13cf0: Re-trigger sycned release with patch
 
 ## 0.2.0
 
