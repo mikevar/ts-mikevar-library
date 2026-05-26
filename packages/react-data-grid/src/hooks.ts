@@ -22,9 +22,6 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
   const queryKeys = useMemo(() => {
     return mergeDefaultAndCustomQueryKeys(options.queryKeys);
   }, [options.queryKeys]);
-  const defaultQueryValues = useMemo(() => {
-    return mergeDefaultQueryValues(options.defaultQueryValues);
-  }, [options.defaultQueryValues]);
 
   const searchParams = useMemo(() => {
     return new URLSearchParams(options.url);
@@ -47,10 +44,11 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
     const { normalized } = parseAndNormalize({
       query,
       queryKeys,
+      defaultQueryValues: options.defaultQueryValues,
     });
 
     return normalized;
-  }, [query]);
+  }, [query, queryKeys, options.defaultQueryValues]);
 
   const [draftState, setDraftState] =
     useState<NormalizedQueryObject>(persistedState);
@@ -166,52 +164,29 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
   }, []);
 
   const submit = useCallback(() => {
-    const nextParams = new URLSearchParams();
-
-    for (const [key, value] of searchParams.entries()) {
-      if (!gridKeys.has(key)) {
-        nextParams.set(key, value);
-      }
-    }
-
-    nextParams.set(queryKeys.filterMode, draftState.filtering.mode);
-
-    if (draftState.filtering.mode === "search") {
-      nextParams.set(queryKeys.search, draftState.filtering.search);
-    }
-
-    nextParams.set(queryKeys.paginationMode, draftState.pagination.mode);
-
-    if (draftState.pagination.mode === "offset") {
-      nextParams.set(queryKeys.page, String(draftState.pagination.page));
-    } else if (draftState.pagination.mode === "cursor") {
-      nextParams.set(queryKeys.cursor, draftState.pagination.cursor);
-    }
-
-    nextParams.set(queryKeys.limit, String(draftState.pagination.limit));
-
-    nextParams.set(
-      queryKeys.orders,
-      draftState.sorting.orders
-        .map(
-          (order) =>
-            `${order.column}${COL_DIRECTION_SEPARATOR}${order.direction}`,
-        )
-        .join(","),
-    );
-
-    for (const [key, value] of Object.entries(
-      draftState.filtering.rawFilters,
-    )) {
-      nextParams.set(key, value);
-    }
+    const nextParams = serializeNormalizedQueryObject({
+      gridKeys,
+      normalized: draftState,
+      queryKeys,
+      searchParams,
+    });
 
     options.onUrlChange?.(nextParams.toString());
   }, [draftState, options, searchParams]);
 
-  const resetToPersisted = useCallback(() => {
+  const resetDraftToPersisted = useCallback(() => {
     setDraftState(persistedState);
   }, [persistedState]);
+
+  const resetDraftToInitial = useCallback(() => {
+    const { normalized } = parseAndNormalize({
+      query: {},
+      queryKeys,
+      defaultQueryValues: options.defaultQueryValues,
+    });
+
+    setDraftState(normalized);
+  }, [queryKeys, options.defaultQueryValues]);
 
   return {
     persistedState,
@@ -226,7 +201,62 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
       setFilter,
 
       submit,
-      resetToPersisted,
+      resetDraftToPersisted,
+      resetDraftToInitial,
     },
   };
+}
+
+interface SerializeNormalizedQueryObjectOptions {
+  normalized: NormalizedQueryObject;
+  queryKeys: QueryKeysOptions;
+  searchParams: URLSearchParams;
+  gridKeys: Set<string>;
+}
+
+function serializeNormalizedQueryObject({
+  normalized,
+  queryKeys,
+  searchParams,
+  gridKeys,
+}: SerializeNormalizedQueryObjectOptions) {
+  const nextParams = new URLSearchParams(searchParams);
+
+  for (const [key, value] of searchParams.entries()) {
+    if (!gridKeys.has(key)) {
+      nextParams.set(key, value);
+    }
+  }
+
+  nextParams.set(queryKeys.filterMode!, normalized.filtering.mode);
+
+  if (normalized.filtering.mode === "search") {
+    nextParams.set(queryKeys.search!, normalized.filtering.search);
+  }
+
+  nextParams.set(queryKeys.paginationMode!, normalized.pagination.mode);
+
+  if (normalized.pagination.mode === "offset") {
+    nextParams.set(queryKeys.page!, String(normalized.pagination.page));
+  } else if (normalized.pagination.mode === "cursor") {
+    nextParams.set(queryKeys.cursor!, normalized.pagination.cursor);
+  }
+
+  nextParams.set(queryKeys.limit!, String(normalized.pagination.limit));
+
+  nextParams.set(
+    queryKeys.orders!,
+    normalized.sorting.orders
+      .map(
+        (order) =>
+          `${order.column}${COL_DIRECTION_SEPARATOR}${order.direction}`,
+      )
+      .join(","),
+  );
+
+  for (const [key, value] of Object.entries(normalized.filtering.rawFilters)) {
+    nextParams.set(key, value);
+  }
+
+  return nextParams;
 }
