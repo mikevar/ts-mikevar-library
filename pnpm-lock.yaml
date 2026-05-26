@@ -105,8 +105,8 @@ importers:
   packages/react-data-grid:
     dependencies:
       '@mikevar/data-grid':
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.2.0
+        version: 0.2.0
       nuqs:
         specifier: ^2.8.9
         version: 2.8.9(react@19.2.6)
@@ -691,6 +691,9 @@ packages:
 
   '@mikevar/data-grid@0.1.1':
     resolution: {integrity: sha512-R+QME+BZEXkPJCH20b90i5v4fb07AtmspjrKlnLKN71NeYqxb6sG5XRGCNd21Hpy81hmnvuYFjSkUyee64qsUw==}
+
+  '@mikevar/data-grid@0.2.0':
+    resolution: {integrity: sha512-3R7QsRjR6PR3FIQHuYwHuc4mIKyvBXMq4XDV1vKiFm/Uf/5FQALPzuAyKUB8GgUVXFWd0cgkeOP0YFpPFDz3LA==}
 
   '@napi-rs/wasm-runtime@1.1.2':
     resolution: {integrity: sha512-sNXv5oLJ7ob93xkZ1XnxisYhGYXfaG9f65/ZgYuAu3qt7b3NadcOEhLvx28hv31PgX8SZJRYrAIPQilQmFpLVw==}
@@ -3071,6 +3074,8 @@ snapshots:
       read-yaml-file: 1.1.0
 
   '@mikevar/data-grid@0.1.1': {}
+
+  '@mikevar/data-grid@0.2.0': {}
 
   '@napi-rs/wasm-runtime@1.1.2(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)':
     dependencies:
