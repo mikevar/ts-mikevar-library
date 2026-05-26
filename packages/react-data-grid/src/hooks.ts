@@ -52,10 +52,6 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
   const [draftState, setDraftState] =
     useState<NormalizedQueryObject>(persistedState);
 
-  useEffect(() => {
-    setDraftState(persistedState);
-  }, [persistedState]);
-
   const setFilterMode = useCallback((filterMode: FilterMode) => {
     setDraftState((prev) => ({
       ...prev,
