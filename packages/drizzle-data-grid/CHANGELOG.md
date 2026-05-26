@@ -1,5 +1,11 @@
 # @mikevar/drizzle-data-grid
 
+## 0.2.0
+
+### Minor Changes
+
+- dedea05: Implement `@mikevar/data-grid` abstraction
+
 ## 0.1.3
 
 ### Patch Changes
