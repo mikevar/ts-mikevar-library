@@ -1,32 +1,38 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   COL_DIRECTION_SEPARATOR,
+  DefaultQueryValuesOptions,
   type FilterMode,
+  mergeDefaultAndCustomQueryKeys,
+  mergeDefaultQueryValues,
   type NormalizedQueryObject,
   parseAndNormalize,
+  QueryKeysOptions,
 } from "@mikevar/data-grid";
 
 interface UseDataGridStatesOptions {
   url: string;
   filterQueryKeys?: string[];
   onUrlChange?: (url: string) => void;
+  queryKeys?: QueryKeysOptions;
+  defaultQueryValues: DefaultQueryValuesOptions;
 }
 
 export function useDataGridStates(options: UseDataGridStatesOptions) {
+  const queryKeys = useMemo(() => {
+    return mergeDefaultAndCustomQueryKeys(options.queryKeys);
+  }, [options.queryKeys]);
+  const defaultQueryValues = useMemo(() => {
+    return mergeDefaultQueryValues(options.defaultQueryValues);
+  }, [options.defaultQueryValues]);
+
   const searchParams = useMemo(() => {
     return new URLSearchParams(options.url);
   }, [options.url]);
 
   const gridKeys = useMemo(() => {
     return new Set([
-      "filterMode",
-      "search",
-      "paginationMode",
-      "page",
-      "limit",
-      "cursor",
-      "orders",
-
+      ...Object.values(queryKeys),
       ...(options.filterQueryKeys ?? []),
     ]);
   }, [options.filterQueryKeys]);
@@ -40,16 +46,7 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
   const persistedState = useMemo<NormalizedQueryObject>(() => {
     const { normalized } = parseAndNormalize({
       query,
-
-      queryKeys: {
-        filterMode: "filterMode",
-        search: "search",
-        paginationMode: "paginationMode",
-        page: "page",
-        limit: "limit",
-        cursor: "cursor",
-        orders: "orders",
-      },
+      queryKeys,
     });
 
     return normalized;
@@ -177,24 +174,24 @@ export function useDataGridStates(options: UseDataGridStatesOptions) {
       }
     }
 
-    nextParams.set("filterMode", draftState.filtering.mode);
+    nextParams.set(queryKeys.filterMode, draftState.filtering.mode);
 
     if (draftState.filtering.mode === "search") {
-      nextParams.set("search", draftState.filtering.search);
+      nextParams.set(queryKeys.search, draftState.filtering.search);
     }
 
-    nextParams.set("paginationMode", draftState.pagination.mode);
+    nextParams.set(queryKeys.paginationMode, draftState.pagination.mode);
 
     if (draftState.pagination.mode === "offset") {
-      nextParams.set("page", String(draftState.pagination.page));
+      nextParams.set(queryKeys.page, String(draftState.pagination.page));
     } else if (draftState.pagination.mode === "cursor") {
-      nextParams.set("cursor", draftState.pagination.cursor);
+      nextParams.set(queryKeys.cursor, draftState.pagination.cursor);
     }
 
-    nextParams.set("limit", String(draftState.pagination.limit));
+    nextParams.set(queryKeys.limit, String(draftState.pagination.limit));
 
     nextParams.set(
-      "orders",
+      queryKeys.orders,
       draftState.sorting.orders
         .map(
           (order) =>
