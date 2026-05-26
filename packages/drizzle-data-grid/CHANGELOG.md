@@ -1,12 +1,5 @@
 # @mikevar/drizzle-data-grid
 
-## 1.0.0
-
-### Patch Changes
-
-- Updated dependencies [417aba4]
-  - @mikevar/data-grid@0.2.0
-
 ## 0.2.1
 
 ### Patch Changes
