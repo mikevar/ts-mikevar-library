@@ -15,10 +15,7 @@ import {
   toPositiveInt,
   isFilterOperator,
 } from "./helpers.ts";
-import {
-  mergeDefaultAndCustomQueryKeys,
-  mergeDefaultQueryValues,
-} from "./utils.ts";
+import { mergeDefaultQueryValues } from "./utils.ts";
 
 interface NormalizeParsedQueryObjectParams {
   parsedQuery: ParsedQueryObject;
