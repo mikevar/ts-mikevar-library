@@ -89,8 +89,8 @@ importers:
   packages/drizzle-data-grid:
     dependencies:
       '@mikevar/data-grid':
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.2.0
+        version: 0.2.0
       drizzle-orm:
         specifier: ^0.45.2
         version: 0.45.2(@types/better-sqlite3@7.6.13)(@types/pg@8.20.0)(better-sqlite3@12.8.0)(pg@8.20.0)(sqlite3@6.0.1)
@@ -688,9 +688,6 @@ packages:
 
   '@manypkg/get-packages@1.1.3':
     resolution: {integrity: sha512-fo+QhuU3qE/2TQMQmbVMqaQ6EWbMhi4ABWP+O4AM1NqPBuy0OrApV5LO6BrrgnhtAHS2NH6RrVk9OL181tTi8A==}
-
-  '@mikevar/data-grid@0.1.1':
-    resolution: {integrity: sha512-R+QME+BZEXkPJCH20b90i5v4fb07AtmspjrKlnLKN71NeYqxb6sG5XRGCNd21Hpy81hmnvuYFjSkUyee64qsUw==}
 
   '@mikevar/data-grid@0.2.0':
     resolution: {integrity: sha512-3R7QsRjR6PR3FIQHuYwHuc4mIKyvBXMq4XDV1vKiFm/Uf/5FQALPzuAyKUB8GgUVXFWd0cgkeOP0YFpPFDz3LA==}
@@ -3072,8 +3069,6 @@ snapshots:
       fs-extra: 8.1.0
       globby: 11.1.0
       read-yaml-file: 1.1.0
-
-  '@mikevar/data-grid@0.1.1': {}
 
   '@mikevar/data-grid@0.2.0': {}
 
