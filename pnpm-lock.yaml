@@ -107,13 +107,13 @@ importers:
       nuqs:
         specifier: ^2.8.9
         version: 2.8.9(react@19.2.6)
+      react:
+        specifier: ^18 || ^19
+        version: 19.2.6
     devDependencies:
       '@types/react':
         specifier: ^19.1.8
         version: 19.2.15
-      react:
-        specifier: ^19.1.0
-        version: 19.2.6
       tsup:
         specifier: ^8.5.0
         version: 8.5.1(postcss@8.5.8)(tsx@4.21.0)(typescript@6.0.2)
