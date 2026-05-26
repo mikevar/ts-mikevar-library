@@ -27,6 +27,9 @@
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "pnpm build"
   },
+  "dependencies": {
+    "nuqs": "^2.8.9"
+  },
   "peerDependencies": {
     "react": "^18 || ^19"
   },
@@ -37,9 +40,6 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "dependencies": {
-    "nuqs": "^2.8.9"
   },
   "repository": {
     "type": "git",
