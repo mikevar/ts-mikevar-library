@@ -7,6 +7,7 @@ import {
   arrayOverlaps,
   or,
   eq,
+  like,
   ilike,
   gt,
   gte,
@@ -46,6 +47,7 @@ export const filterOperators: Record<
   notBetween: (col, [val1, val2]) =>
     notBetween(col, val1 as string, val2 as string),
 
+  like: (col, [val]) => like(col as AnyColumn, `%${val}%`),
   ilike: (col, [val]) => ilike(col as AnyColumn, `%${val}%`),
   notIlike: (col, [val]) => notIlike(col as AnyColumn, `%${val}%`),
 
