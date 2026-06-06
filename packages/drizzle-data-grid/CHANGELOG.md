@@ -1,5 +1,11 @@
 # @mikevar/drizzle-data-grid
 
+## 0.2.3
+
+### Patch Changes
+
+- b4cc3bf: Update implementation of new `@mikevar/data-grid` release
+
 ## 0.2.2
 
 ### Patch Changes
