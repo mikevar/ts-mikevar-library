@@ -92,7 +92,7 @@ export function buildQueryPlan({
       if (!field) continue;
       if (field.type !== "string") continue;
 
-      wheres.push(filterOperators.iLike(field.column, [filtering.search]));
+      wheres.push(filterOperators.ilike(field.column, [filtering.search]));
     }
     whereClause =
       wheres.length === 0
