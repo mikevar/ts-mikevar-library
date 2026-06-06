@@ -1,6 +1,6 @@
 {
   "name": "@mikevar/drizzle-data-grid",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -23,7 +23,7 @@
     "dev": "tsup src/index.ts --format esm,cjs --dts --watch"
   },
   "dependencies": {
-    "@mikevar/data-grid": "^0.2.0"
+    "@mikevar/data-grid": "^0.3.0"
   },
   "peerDependencies": {
     "drizzle-orm": "^0.45.2"
