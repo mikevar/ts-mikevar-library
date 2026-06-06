@@ -1,7 +1,7 @@
 import type { FilterMode, PaginationMode } from "./types.ts";
 
 export const COL_DIRECTION_SEPARATOR = ":";
-export const COL_OPERATOR_SEPARATOR = "__";
+export const COL_OPERATOR_SEPARATOR = ":";
 
 export const DEFAULT_FILTER_MODE_KEY = "filterMode";
 export const DEFAULT_SEARCH_KEY = "search";
