@@ -108,7 +108,7 @@ app.get("/users", async (req, res) => {
 then you call it like this:
 
 ```
-http://localhost:3000/users/for-data-grid?page=1&limit=5&paginationMode=offset&filterMode=filter&name__iLike=john&orders=email:asc
+http://localhost:3000/users/for-data-grid?page=1&limit=5&paginationMode=offset&filterMode=filter&name:ilike=john&orders=email:asc
 ```
 
 and it will return something like this:
@@ -183,7 +183,7 @@ and it will return something like this:
 And this is just the tip of the iceberg, because you can do a lot more with this function, like:
 
 ```
-http://localhost:3000/users/for-data-grid?page=1&limit=5&paginationMode=offset&filterMode=filter&roleName__iLike=something&orders=email:asc,roleId:desc
+http://localhost:3000/users/for-data-grid?page=1&limit=5&paginationMode=offset&filterMode=filter&roleName:ilike=something&orders=email:asc,roleId:desc
 ```
 
 or:
@@ -195,13 +195,13 @@ http://localhost:3000/users/for-data-grid?page=1&limit=5&paginationMode=offset&f
 or even:
 
 ```
-http://localhost:3000/users/for-data-grid?cursor=1&limit=5&paginationMode=cursor&filterMode=filter&roleName__iLike=something&orders=id:asc
+http://localhost:3000/users/for-data-grid?cursor=1&limit=5&paginationMode=cursor&filterMode=filter&roleName:ilike=something&orders=id:asc
 ```
 
 even more "magical":
 
 ```
-http://localhost:3000/users/for-data-grid?p=1&l=5&pm=offset&fm=filter&roleName__iLike=something&o=email:asc,roleId:desc
+http://localhost:3000/users/for-data-grid?p=1&l=5&pm=offset&fm=filter&roleName:ilike=something&o=email:asc,roleId:desc
 ```
 
 by defining it as:
