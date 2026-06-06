@@ -28,7 +28,7 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "@mikevar/data-grid": "^0.3.0",
+    "@mikevar/data-grid": "^0.3.1",
     "nuqs": "^2.8.9"
   },
   "peerDependencies": {
