@@ -7,7 +7,11 @@ import type {
   OffsetPaginationObject,
   DefaultQueryValuesOptions,
 } from "./types.ts";
-import { COL_DIRECTION_SEPARATOR, COL_OPERATOR_SEPARATOR } from "./consts.ts";
+import {
+  ARR_IN_STRING_SEPARATOR,
+  COL_DIRECTION_SEPARATOR,
+  COL_OPERATOR_SEPARATOR,
+} from "./consts.ts";
 import {
   isPaginationMode,
   isOrderDirection,
@@ -55,7 +59,8 @@ export function normalizeParsedQueryObject({
           limit,
         } as CursorPaginationObject);
 
-  const explodedOrders = parsedQuery.sorting.orders?.split(",") || [];
+  const explodedOrders =
+    parsedQuery.sorting.orders?.split(ARR_IN_STRING_SEPARATOR) || [];
   const orders = explodedOrders
     .map((order) => {
       const [column, direction] = order

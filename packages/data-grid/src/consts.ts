@@ -1,7 +1,9 @@
 import type { FilterMode, PaginationMode } from "./types.ts";
 
+export const ARR_IN_STRING_SEPARATOR = ",";
+
 export const COL_DIRECTION_SEPARATOR = ":";
-export const COL_OPERATOR_SEPARATOR = "__";
+export const COL_OPERATOR_SEPARATOR = ":";
 
 export const DEFAULT_FILTER_MODE_KEY = "filterMode";
 export const DEFAULT_SEARCH_KEY = "search";
@@ -20,12 +22,22 @@ export const DEFAULT_SEARCH = "";
 
 export const FILTER_OPERATORS = [
   "eq",
+  "ne",
   "gt",
   "gte",
   "lt",
   "lte",
-  "between",
-  "iLike",
   "isNull",
+  "isNotNull",
   "inArray",
+  "notInArray",
+  "between",
+  "notBetween",
+  "like",
+  "ilike",
+  "notILike",
+  "not",
+  "arrayContains",
+  "arrayContained",
+  "arrayOverlaps",
 ] as const;
