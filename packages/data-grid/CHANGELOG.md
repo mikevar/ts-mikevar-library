@@ -1,5 +1,11 @@
 # @mikevar/data-grid
 
+## 0.3.1
+
+### Patch Changes
+
+- 23b1c76: Fix wrong filter operator implementation
+
 ## 0.3.0
 
 ### Minor Changes
