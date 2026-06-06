@@ -438,7 +438,7 @@ describe("normalizeParsedQueryObject", () => {
           sorting: {},
           filtering: {
             filters: {
-              status__eq: "active",
+              "status:eq": "active",
             },
           },
         },
@@ -460,8 +460,8 @@ describe("normalizeParsedQueryObject", () => {
           sorting: {},
           filtering: {
             filters: {
-              status__eq: "active",
-              role__eq: "admin",
+              "status:eq": "active",
+              "role:eq": "admin",
             },
           },
         },
@@ -477,7 +477,7 @@ describe("normalizeParsedQueryObject", () => {
           sorting: {},
           filtering: {
             filters: {
-              status__eq: " active ",
+              "status:eq": " active ",
             },
           },
         },
@@ -493,7 +493,7 @@ describe("normalizeParsedQueryObject", () => {
           sorting: {},
           filtering: {
             filters: {
-              status__invalid: "active",
+              "status:invalid": "active",
             },
           },
         },
@@ -596,7 +596,7 @@ describe("normalizeParsedQueryObject", () => {
             mode: "search",
             search: "john",
             filters: {
-              status__eq: "active",
+              "status:eq": "active",
             },
           },
         },
@@ -622,6 +622,9 @@ describe("normalizeParsedQueryObject", () => {
         },
         filtering: {
           mode: "search",
+          rawFilters: {
+            "status:eq": "active",
+          },
           search: "john",
           filters: [
             {
