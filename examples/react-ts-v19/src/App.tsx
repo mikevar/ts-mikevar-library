@@ -3,9 +3,9 @@ import { useDataGridStates } from "@mikevar/react-data-grid";
 function App() {
   const { persistedState, draftState, actions } = useDataGridStates({
     url: "?id_a=1&id_b=2&id_c=3&filterMode=filter&search=something&page=5&limit=6&cursor=7&orders=id:asc",
-    filterQueryKeys: ["name__iLike"],
+    filterQueryKeys: ["name:ilike"],
     defaultQueryValues: {},
-    onUrlChange(url) {
+    onUrlChange(url: string) {
       console.log(url);
     },
   });
@@ -19,8 +19,8 @@ function App() {
         onChange={(e) => actions.setSearch(e.target.value)}
       />
       <input
-        value={draftState.filtering.rawFilters["name__iLike"]}
-        onChange={(e) => actions.setFilter("name__iLike", e.target.value)}
+        value={draftState.filtering.rawFilters["name:ilike"]}
+        onChange={(e) => actions.setFilter("name:ilike", e.target.value)}
       />
       <button onClick={actions.submit}>Submit</button>
     </>
