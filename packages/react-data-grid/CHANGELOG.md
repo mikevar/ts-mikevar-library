@@ -1,5 +1,11 @@
 # @mikevar/react-data-grid
 
+## 0.1.1
+
+### Patch Changes
+
+- b4cc3bf: Update implementation of new `@mikevar/data-grid` release
+
 ## 0.1.0
 
 ### Minor Changes
