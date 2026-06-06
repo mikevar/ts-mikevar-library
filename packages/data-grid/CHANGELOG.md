@@ -1,5 +1,11 @@
 # @mikevar/data-grid
 
+## 0.3.0
+
+### Minor Changes
+
+- 063b93c: Change separator for operator from \_\_ to :
+
 ## 0.2.0
 
 ### Minor Changes
