@@ -1,4 +1,7 @@
-import type { NormalizedQueryObject } from "@mikevar/data-grid";
+import {
+  ARR_IN_STRING_SEPARATOR,
+  type NormalizedQueryObject,
+} from "@mikevar/data-grid";
 import type {
   FieldSchema,
   FieldSchemaObject,
@@ -89,7 +92,7 @@ export function buildQueryPlan({
       if (!field) continue;
       if (field.type !== "string") continue;
 
-      wheres.push(filterOperators.iLike(field.column, [filtering.search]));
+      wheres.push(filterOperators.ilike(field.column, [filtering.search]));
     }
     whereClause =
       wheres.length === 0
@@ -104,7 +107,7 @@ export function buildQueryPlan({
 
       const parsedValues = parseValue({
         type: field.type,
-        values: (filter.value as string).split(","),
+        values: (filter.value as string).split(ARR_IN_STRING_SEPARATOR),
       });
 
       wheres.push(
